@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!widget) return;
 
   const BASE_SLOTS = ['09:00', '10:00', '11:00', '14:00', '15:30', '17:00'];
-  const NUM_DAYS = 21;
 
   // Tant que js/config.js contient encore les valeurs par défaut, on ne peut
   // pas interroger Supabase : on bascule sur des créneaux de démonstration
@@ -157,40 +156,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- STEP 2 : Calendrier + créneaux (Supabase) ---- */
   const calendarEl = document.getElementById('calendar');
+  const weekdaysEl = document.getElementById('calendar-weekdays');
+  const monthLabelEl = document.getElementById('cal-month-label');
+  const prevMonthBtn = document.getElementById('cal-prev');
+  const nextMonthBtn = document.getElementById('cal-next');
   const slotsEl = document.getElementById('slots');
   const toStep3 = document.getElementById('to-step-3');
 
-  const DAY_LABELS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+  const WEEKDAY_LABELS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+  const MONTH_LABELS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+  const MAX_MONTHS_AHEAD = 3; // limite raisonnable de navigation dans le futur
 
   function toISODate(date) {
     return date.toISOString().slice(0, 10); // 'YYYY-MM-DD'
   }
 
-  function buildCandidateDays(numDays) {
-    const closed = new Set((window.CLOSED_DATES || []));
-    const days = [];
-    let d = new Date();
-    while (days.length < numDays) {
-      d.setDate(d.getDate() + 1);
-      const day = new Date(d);
-      const iso = toISODate(day);
-      if (day.getDay() === 0) continue;   // dimanche fermé
-      if (closed.has(iso)) continue;      // jour bloqué manuellement
-      days.push({ date: day, iso });
-    }
-    return days;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const minSelectable = new Date(today);
+  minSelectable.setDate(minSelectable.getDate() + 1); // pas de réservation le jour même
+
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth(); // 0-11
+
+  if (weekdaysEl) weekdaysEl.innerHTML = WEEKDAY_LABELS.map(l => `<span>${l}</span>`).join('');
+
+  function monthsFromToday(y, m) {
+    return (y - today.getFullYear()) * 12 + (m - today.getMonth());
   }
 
-  // takenByDate: Map<'YYYY-MM-DD', Set<'HH:MM'>> construite depuis Supabase
+  function updateNavState() {
+    if (prevMonthBtn) prevMonthBtn.disabled = monthsFromToday(viewYear, viewMonth) <= 0;
+    if (nextMonthBtn) nextMonthBtn.disabled = monthsFromToday(viewYear, viewMonth) >= MAX_MONTHS_AHEAD;
+    if (monthLabelEl) monthLabelEl.textContent = `${MONTH_LABELS[viewMonth]} ${viewYear}`;
+  }
+
+  // takenByDate: Map<'YYYY-MM-DD', Set<'HH:MM'>> construite depuis Supabase, pour le mois affiché
   let takenByDate = new Map();
-  let candidateDays = [];
 
   async function loadAvailability() {
-    candidateDays = buildCandidateDays(NUM_DAYS);
-    const from = candidateDays[0].iso;
-    const to = candidateDays[candidateDays.length - 1].iso;
-
+    updateNavState();
     calendarEl.innerHTML = '<p class="booking-hint">Chargement des disponibilités…</p>';
+
+    const from = toISODate(new Date(viewYear, viewMonth, 1));
+    const to = toISODate(new Date(viewYear, viewMonth + 1, 0));
 
     const { data, error } = await supabaseClient
       .from('creneaux_pris')
@@ -215,29 +224,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderCalendar() {
     calendarEl.innerHTML = '';
-    candidateDays.forEach(day => {
-      const taken = takenByDate.get(day.iso) || new Set();
+    const closed = new Set(window.CLOSED_DATES || []);
+
+    const firstOfMonth = new Date(viewYear, viewMonth, 1);
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const leadingBlanks = (firstOfMonth.getDay() + 6) % 7; // grille alignée lundi -> dimanche
+
+    for (let i = 0; i < leadingBlanks; i++) {
+      const blank = document.createElement('span');
+      blank.className = 'cal-day is-empty';
+      blank.setAttribute('aria-hidden', 'true');
+      calendarEl.appendChild(blank);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(viewYear, viewMonth, d);
+      const iso = toISODate(date);
+      const taken = takenByDate.get(iso) || new Set();
       const isFull = BASE_SLOTS.every(s => taken.has(s));
+      const disabled = date < minSelectable || date.getDay() === 0 || closed.has(iso) || isFull;
 
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'cal-day' + (isFull ? ' is-full' : '');
-      btn.disabled = isFull;
-      const label = DAY_LABELS[(day.date.getDay() + 6) % 7];
-      btn.innerHTML = `<span>${label}</span>${day.date.getDate()}`;
-      btn.addEventListener('click', () => selectDay(day, btn));
+      btn.className = 'cal-day' + (disabled ? ' is-disabled' : '');
+      btn.disabled = disabled;
+      btn.textContent = String(d);
+      if (!disabled) btn.addEventListener('click', () => selectDay(date, iso, btn));
       calendarEl.appendChild(btn);
-    });
+    }
   }
 
-  function selectDay(day, btn) {
+  function changeMonth(delta) {
+    viewMonth += delta;
+    if (viewMonth < 0) { viewMonth = 11; viewYear -= 1; }
+    if (viewMonth > 11) { viewMonth = 0; viewYear += 1; }
+    slotsEl.innerHTML = '';
+    toStep3.disabled = true;
+    loadAvailability();
+  }
+
+  if (prevMonthBtn) prevMonthBtn.addEventListener('click', () => changeMonth(-1));
+  if (nextMonthBtn) nextMonthBtn.addEventListener('click', () => changeMonth(1));
+
+  function selectDay(date, iso, btn) {
     calendarEl.querySelectorAll('.cal-day').forEach(b => b.classList.remove('is-selected'));
     btn.classList.add('is-selected');
-    state.date = day.date;
-    state.dateISO = day.iso;
+    state.date = date;
+    state.dateISO = iso;
     state.time = null;
     toStep3.disabled = true;
-    renderSlots(day.iso);
+    renderSlots(iso);
   }
 
   function renderSlots(iso) {
@@ -350,6 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
     recapView.hidden = false;
     successView.hidden = true;
     goToStep(1);
+    viewYear = today.getFullYear();
+    viewMonth = today.getMonth();
     loadAvailability();
   });
 

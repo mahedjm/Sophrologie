@@ -358,23 +358,34 @@ img, svg { display: block; max-width: 100%; }
   .lieu-option { flex: 1; }
 }
 
-.booking-hint { font-family: var(--font-mono); font-size: .78rem; color: var(--color-ink-soft); margin-bottom: 1.2rem; }
+.booking-hint { font-family: var(--font-mono); font-size: .78rem; color: var(--color-ink-soft); margin-bottom: .6rem; }
 
-.calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: .5rem; margin-bottom: 1.4rem; }
-.cal-day {
-  aspect-ratio: 1; min-height: 44px; border-radius: 8px; border: 2px solid var(--color-line); background: #fff;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  font-size: .88rem; font-weight: 600; cursor: pointer; color: var(--color-ink); gap: 2px;
+.calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
+.cal-nav-btn {
+  width: 36px; height: 36px; flex: none; border-radius: 50%; border: 2px solid var(--color-line);
+  background: #fff; cursor: pointer; font-size: 1.15rem; line-height: 1; color: var(--color-river-2);
+  display: flex; align-items: center; justify-content: center; transition: border-color .2s, background .2s;
 }
-.cal-day span { font-family: var(--font-mono); font-size: .64rem; font-weight: 400; color: var(--color-ink-soft); text-transform: uppercase; }
-.cal-day.is-full { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
-.cal-day.is-selected { background: var(--color-plum); color: #fff; border-color: var(--color-plum); }
-.cal-day.is-selected span { color: #F2D9E0; }
-.cal-day.is-header { background: transparent; border: none; font-weight: 600; cursor: default; }
+.cal-nav-btn:hover:not(:disabled) { border-color: var(--color-ochre); }
+.cal-nav-btn:disabled { opacity: .3; cursor: not-allowed; }
+.cal-month-label { font-family: var(--font-display); font-size: 1.1rem; color: var(--color-river-2); text-transform: capitalize; }
 
-.slots { display: flex; flex-wrap: wrap; gap: .7rem; margin-bottom: .5rem; }
+.calendar-weekdays { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .6rem; margin-bottom: .5rem; }
+.calendar-weekdays span { text-align: center; font-family: var(--font-mono); font-size: .68rem; font-weight: 500; color: var(--color-ink-soft); text-transform: uppercase; }
+
+.calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .6rem; margin-bottom: 1.4rem; }
+.cal-day {
+  aspect-ratio: 1; min-height: 52px; border-radius: 8px; border: 2px solid var(--color-line); background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 600; cursor: pointer; color: var(--color-ink);
+}
+.cal-day.is-empty { visibility: hidden; border: none; background: transparent; pointer-events: none; }
+.cal-day.is-disabled { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
+.cal-day.is-selected { background: var(--color-plum); color: #fff; border-color: var(--color-plum); }
+
+.slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; margin-bottom: .5rem; }
 .slot-btn {
-  font-family: var(--font-mono); font-size: .92rem; font-weight: 500; padding: .75em 1.3em; min-height: 44px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: .84rem; font-weight: 500; padding: .55em .8em; min-height: 40px; border-radius: 999px;
   border: 2px solid var(--color-line); background: #fff; cursor: pointer;
 }
 .slot-btn.is-selected { background: var(--color-river-2); color: #fff; border-color: var(--color-river-2); }
@@ -495,6 +506,12 @@ img, svg { display: block; max-width: 100%; }
   .oc-duration { font-size: .74rem; }
   #booking-form .form-row { grid-template-columns: 1fr; }
   .booking-widget { padding: 1.6rem; }
+  .calendar-weekdays, .calendar { gap: .35rem; }
+  .calendar-weekdays span { font-size: .58rem; }
+  .cal-day { min-height: 34px; font-size: .8rem; border-width: 1.5px; }
+  .cal-month-label { font-size: .96rem; }
+  .slots { gap: .45rem; }
+  .slot-btn { font-size: .78rem; padding: .5em .4em; min-height: 38px; border-width: 1.5px; }
   .booking-steps { margin-bottom: 1.8rem; }
   .bstep {
     flex: none; display: flex; align-items: center; gap: .4rem;

@@ -561,6 +561,12 @@
       <div class="booking-panel" data-panel="2">
         <h3>Choisissez un créneau</h3>
         <p class="booking-hint">Créneaux illustratifs — à connecter à un agenda réel.</p>
+        <div class="calendar-nav">
+          <button type="button" class="cal-nav-btn" id="cal-prev" aria-label="Mois précédent">‹</button>
+          <span class="cal-month-label" id="cal-month-label" aria-live="polite"></span>
+          <button type="button" class="cal-nav-btn" id="cal-next" aria-label="Mois suivant">›</button>
+        </div>
+        <div class="calendar-weekdays" id="calendar-weekdays"></div>
         <div class="calendar" id="calendar"></div>
         <div class="slots" id="slots" aria-live="polite"></div>
         <div class="booking-actions">
