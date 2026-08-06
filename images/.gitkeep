@@ -1,0 +1,17 @@
+Ce dossier accueille les images du site.
+
+Pour la photo de profil de la section "Qui suis-je", ajoute un fichier
+nommé exactement :
+
+    marie-laurence.jpg
+
+Le site l'affichera automatiquement — aucune modification de code
+nécessaire. Tant qu'aucun fichier n'est présent, le monogramme "ML"
+s'affiche à la place.
+
+Conseils pour la photo :
+- Format carré de préférence (elle est recadrée en cercle)
+- Au moins 600x600 px pour rester nette
+- .jpg ou .png (renomme simplement le fichier en "marie-laurence.jpg"
+  ou "marie-laurence.png" — dans ce dernier cas, pense à changer
+  l'extension dans index.html, ligne du <img src="images/...">)

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Au fil de soi — Sophrologie à Marmande</title>
+<meta name="description" content="Marie-Laurence Bonneau, sophrologue certifiée dans le Marmandais. Séances en cabinet ou à domicile : gestion du stress, sommeil, confiance en soi. Réservez en ligne.">
+
+<!-- ===================================================================
+     Vraies informations de Marie-Laurence Bonneau déjà intégrées
+     (bio, formation ISSO Toulouse, cabinet à Grézet-Cavagnan).
+     Reste à personnaliser avant mise en ligne :
+     - Adresse exacte du cabinet (actuellement juste "Grézet-Cavagnan")
+     - Téléphone, email et SIRET (encore des valeurs de test)
+     - Remplacer le monogramme SVG "ML" par une vraie photo si souhaité
+     - Les avis clients sont fictifs, à remplacer par de vrais témoignages
+     - Le module de réservation est connecté à Supabase (voir js/config.js
+       et le README pour finaliser le déploiement)
+     =================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+    <a href="#accueil" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="34" height="34">
+          <path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-text">Au fil de soi</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+      <a href="#qui-suis-je">Qui suis-je</a>
+      <a href="#prestations">Prestations</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#zone">Zone d'intervention</a>
+      <a href="#avis">Avis</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#reservation" class="btn btn-primary btn-small">Réserver</a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="accueil">
+  <div class="hero-waves" aria-hidden="true">
+    <svg viewBox="0 0 1200 500" preserveAspectRatio="none">
+      <path class="wave wave-1" d="M0 260 C 150 180, 300 340, 450 260 S 750 180, 900 260 S 1200 260, 1200 260" />
+      <path class="wave wave-2" d="M0 320 C 180 260, 320 380, 500 320 S 800 260, 950 320 S 1200 320, 1200 320" />
+      <path class="wave wave-3" d="M0 380 C 200 340, 340 420, 520 380 S 820 330, 980 380 S 1200 380, 1200 380" />
+    </svg>
+  </div>
+
+  <div class="wrap hero-inner">
+    <p class="eyebrow reveal">Sophrologie caycédienne · Cabinet &amp; domicile · Marmande</p>
+    <h1 class="hero-title reveal">Retrouver <em>le fil</em><br>de sa respiration.</h1>
+    <p class="hero-text reveal">
+      J'accompagne les adultes, ados et enfants du Marmandais à traverser le stress,
+      les nuits difficiles et les périodes de transition — par la respiration,
+      la détente du corps et des exercices simples à emporter chez soi.
+      En cabinet, ou directement chez vous.
+    </p>
+    <div class="hero-cta reveal">
+      <a href="#reservation" class="btn btn-primary">Réserver une séance</a>
+      <a href="#tarifs" class="btn btn-ghost">Voir les tarifs</a>
+    </div>
+    <p class="hero-note reveal">Premier échange téléphonique de 15 min offert, sans engagement.</p>
+  </div>
+</section>
+
+<!-- ============================ QUI SUIS-JE ============================ -->
+<section class="section" id="qui-suis-je">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal">
+      <div class="portrait-frame">
+        <svg viewBox="0 0 320 320" class="portrait-rings" aria-hidden="true">
+          <circle cx="160" cy="160" r="150" class="p-ring-1"/>
+          <circle cx="160" cy="160" r="118" class="p-ring-2"/>
+        </svg>
+        <img src="images/marie-laurence.png" alt="Marie-Laurence Bonneau, sophrologue"
+             class="portrait-photo"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="portrait-fallback" aria-hidden="true"><span>ML</span></div>
+      </div>
+      <span class="about-caption">Marie-Laurence Bonneau</span>
+    </div>
+
+    <div class="about-content reveal">
+      <p class="eyebrow">Qui suis-je</p>
+      <h2>Marie-Laurence Bonneau</h2>
+      <p class="about-role">Sophrologue certifiée (ISSO Toulouse) — Aide-soignante en USC &amp; SSPI</p>
+
+      <p>
+        Sophrologue de formation, je me suis ensuite formée au métier d'aide-soignante —
+        un choix cohérent avec mes valeurs d'accompagnement. Cette double approche,
+        entre écoute et rigueur clinique, nourrit chaque séance que je propose.
+      </p>
+      <p>
+        J'exerce aujourd'hui en Unité de Soins Continus (USC) et en Salle de Surveillance
+        Post-Interventionnelle (SSPI), où réactivité et maîtrise des soins en situation
+        critique font partie du quotidien. J'interviens également en IFSI et IFAS, où je
+        transmets la gestion du stress et la posture professionnelle aux futurs soignants.
+      </p>
+      <p>
+        Passionnée de bien-être et de musique, je crée aussi des audios de relaxation
+        sur ma chaîne <em>Sophromelody</em>.
+      </p>
+      <p>
+        Basée à Grézet-Cavagnan, je reçois au cabinet ou je me déplace à domicile dans
+        le Marmandais, dans un rayon de 15&nbsp;km — pratique si vous préférez être
+        accompagné·e dans un cadre familier, ou si vous avez une mobilité réduite.
+      </p>
+
+      <ul class="about-tags">
+        <li>Adultes</li>
+        <li>Adolescents</li>
+        <li>Enfants (dès 7 ans)</li>
+        <li>Entreprises &amp; associations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ DÉROULÉ ============================ -->
+<section class="section section-alt" id="deroule">
+  <div class="wrap">
+    <p class="eyebrow reveal center">La démarche</p>
+    <h2 class="section-title reveal center">Comment se déroule un accompagnement</h2>
+
+    <ol class="steps">
+      <li class="step reveal">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h3>Premier échange</h3>
+          <p>Un appel de 15 minutes, gratuit, pour comprendre votre demande et répondre
+          à vos questions — aucun engagement.</p>
+        </div>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h3>Séance découverte</h3>
+          <p>Une première séance d'1h pour poser un bilan complet et construire
+          ensemble un objectif d'accompagnement clair.</p>
+        </div>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h3>Séances de suivi</h3>
+          <p>Des séances régulières (hebdomadaires ou bimensuelles), avec des exercices
+          à pratiquer chez vous entre chaque rendez-vous.</p>
+        </div>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <h3>Autonomie</h3>
+          <p>L'objectif final : que vous repartiez avec des outils que vous pouvez
+          utiliser seul·e, bien au-delà du cabinet.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================ PRESTATIONS ============================ -->
+<section class="section" id="prestations">
+  <div class="wrap">
+    <p class="eyebrow reveal center">Prestations</p>
+    <h2 class="section-title reveal center">Un accompagnement pour chaque étape de vie</h2>
+    <p class="section-lead reveal center">
+      Chaque parcours est personnalisé — voici les demandes les plus fréquentes
+      que j'accompagne au quotidien.
+    </p>
+
+    <div class="cards-grid reveal">
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M8 24c3-10 6 10 9 0s6-10 9 0 6 8 6 0" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <h3>Stress &amp; anxiété</h3>
+        <p>Désamorcer les tensions du quotidien et retrouver son calme.</p>
+      </article>
+
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><circle cx="20" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 32c2-6 14-6 16 0" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <h3>Troubles du sommeil</h3>
+        <p>Faciliter l'endormissement et améliorer la qualité des nuits.</p>
+      </article>
+
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M20 6l4 10 10 1-7.5 7 2 10L20 29l-8.5 5 2-10L6 17l10-1z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <h3>Confiance &amp; affirmation de soi</h3>
+        <p>Aborder prises de parole et entretiens plus sereinement.</p>
+      </article>
+
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><rect x="8" y="10" width="24" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 16h24" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <h3>Examens &amp; concours</h3>
+        <p>Gérer le trac et améliorer la concentration.</p>
+      </article>
+
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M20 8v24M10 16l10-8 10 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Préparation mentale sportive</h3>
+        <p>Concentration et gestion de la pression en compétition.</p>
+      </article>
+
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="13" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="4" fill="currentColor"/></svg>
+        </span>
+        <h3>Grossesse &amp; périnatalité</h3>
+        <p>Se préparer à l'accouchement et à la parentalité.</p>
+      </article>
+
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M20 6c-8 0-12 6-12 13 0 5 2 8 4 10l1 5h14l1-5c2-2 4-5 4-10 0-7-4-13-12-13z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <h3>Douleurs chroniques</h3>
+        <p>Un complément au suivi médical, au quotidien.</p>
+      </article>
+
+      <article class="p-card">
+        <span class="p-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><circle cx="14" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="27" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 32c1-6 6-9 8-9M34 32c-1-6-6-9-8-9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </span>
+        <h3>Enfants &amp; adolescents</h3>
+        <p>Apprivoiser émotions, sommeil ou anxiété scolaire.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TARIFS ============================ -->
+<section class="section section-alt" id="tarifs">
+  <div class="wrap">
+    <p class="eyebrow reveal center">Formules</p>
+    <h2 class="section-title reveal center">Tarifs</h2>
+    <p class="section-lead reveal center">
+      Séances individuelles, forfaits dégressifs ou visio — choisissez la formule
+      qui correspond à votre rythme.
+    </p>
+
+    <div class="tarif-toggle reveal" role="group" aria-label="Lieu de la séance">
+      <button type="button" class="toggle-btn is-active" data-lieu="cabinet">Au cabinet</button>
+      <button type="button" class="toggle-btn" data-lieu="domicile">À domicile <span>(+10&nbsp;€)</span></button>
+    </div>
+
+    <div class="pricing-grid reveal">
+      <article class="price-card">
+        <h3>Séance découverte</h3>
+        <p class="price"><span class="amount" data-base="55">55</span><span class="unit">€</span></p>
+        <p class="price-meta">1h · premier bilan complet</p>
+        <ul>
+          <li>Recueil de votre demande</li>
+          <li>1er exercice de respiration</li>
+          <li>Compte-rendu écrit</li>
+        </ul>
+        <a href="#reservation" class="btn btn-outline btn-small" data-select-service="Séance découverte">Choisir</a>
+      </article>
+
+      <article class="price-card">
+        <h3>Séance individuelle</h3>
+        <p class="price"><span class="amount" data-base="50">50</span><span class="unit">€</span></p>
+        <p class="price-meta">50 min · suivi personnalisé</p>
+        <ul>
+          <li>Exercice adapté à l'objectif</li>
+          <li>Support audio remis</li>
+          <li>Facture pour mutuelle</li>
+        </ul>
+        <a href="#reservation" class="btn btn-outline btn-small" data-select-service="Séance individuelle">Choisir</a>
+      </article>
+
+      <article class="price-card is-featured">
+        <span class="badge">-10%</span>
+        <h3>Forfait 5 séances</h3>
+        <p class="price"><span class="amount" data-base="225">225</span><span class="unit">€</span></p>
+        <p class="price-meta">soit 45&nbsp;€ / séance · valable 6 mois</p>
+        <ul>
+          <li>Suivi resserré et cohérent</li>
+          <li>Programme d'exercices personnalisé</li>
+          <li>Échange par message entre les séances</li>
+        </ul>
+        <a href="#reservation" class="btn btn-primary btn-small" data-select-service="Forfait 5 séances">Choisir</a>
+      </article>
+
+      <article class="price-card">
+        <span class="badge">-16%</span>
+        <h3>Forfait 10 séances</h3>
+        <p class="price"><span class="amount" data-base="420">420</span><span class="unit">€</span></p>
+        <p class="price-meta">soit 42&nbsp;€ / séance · valable 1 an</p>
+        <ul>
+          <li>Accompagnement long terme</li>
+          <li>Bilan intermédiaire offert</li>
+          <li>Priorité sur les créneaux</li>
+        </ul>
+        <a href="#reservation" class="btn btn-outline btn-small" data-select-service="Forfait 10 séances">Choisir</a>
+      </article>
+
+      <article class="price-card">
+        <h3>Séance en visio</h3>
+        <p class="price"><span class="amount" data-base="45" data-no-domicile="true">45</span><span class="unit">€</span></p>
+        <p class="price-meta">45 min · où que vous soyez</p>
+        <ul>
+          <li>Idéal en déplacement</li>
+          <li>Lien envoyé par email</li>
+          <li>Même suivi qu'en présentiel</li>
+        </ul>
+        <a href="#reservation" class="btn btn-outline btn-small" data-select-service="Séance en visio">Choisir</a>
+      </article>
+
+      <article class="price-card">
+        <h3>Séance duo</h3>
+        <p class="price"><span class="amount" data-base="65">65</span><span class="unit">€</span></p>
+        <p class="price-meta">1h · parent-enfant ou en couple</p>
+        <ul>
+          <li>Objectif commun travaillé</li>
+          <li>Exercices à pratiquer à deux</li>
+          <li>Idéal en préparation à la parentalité</li>
+        </ul>
+        <a href="#reservation" class="btn btn-outline btn-small" data-select-service="Séance duo">Choisir</a>
+      </article>
+    </div>
+
+    <p class="tarif-note reveal">
+      Entreprises, associations et ateliers collectifs : tarifs sur devis à partir
+      de 25&nbsp;€/personne. Une facture est remise à chaque séance — de nombreuses
+      mutuelles remboursent la sophrologie via un forfait « médecines douces ».
+    </p>
+  </div>
+</section>
+
+<!-- ============================ ZONE D'INTERVENTION ============================ -->
+<section class="section" id="zone">
+  <div class="wrap zone-grid">
+    <div class="zone-content reveal">
+      <p class="eyebrow">Cabinet &amp; domicile</p>
+      <h2>Une zone d'intervention centrée sur le Marmandais</h2>
+      <p>
+        Je reçois sur rendez-vous dans mon cabinet à Grézet-Cavagnan, du lundi
+        au vendredi. Je me déplace également à domicile dans un rayon d'environ
+        15&nbsp;km, pour les personnes qui préfèrent être accompagnées chez elles —
+        ou dans l'impossibilité de se déplacer.
+      </p>
+      <div class="zone-info">
+        <div>
+          <h4>Cabinet</h4>
+          <p>Grézet-Cavagnan<br>47250 — adresse précisée au RDV</p>
+        </div>
+        <div>
+          <h4>Domicile</h4>
+          <p>Marmande et 15&nbsp;km alentours<br>Au-delà : sur devis</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="zone-map reveal" aria-hidden="true">
+      <svg viewBox="0 0 360 340" class="map-svg">
+        <circle cx="180" cy="170" r="150" class="map-radius-2"/>
+        <circle cx="180" cy="170" r="95" class="map-radius-1"/>
+        <circle cx="180" cy="170" r="9" class="map-center"/>
+        <text x="180" y="150" text-anchor="middle" class="map-label map-label-main">Marmande</text>
+
+        <circle cx="95" cy="120" r="5" class="map-point"/>
+        <text x="95" y="106" text-anchor="middle" class="map-label">Le Mas-d'Agenais</text>
+
+        <circle cx="265" cy="110" r="5" class="map-point"/>
+        <text x="265" y="96" text-anchor="middle" class="map-label">Tonneins</text>
+
+        <circle cx="245" cy="255" r="5" class="map-point"/>
+        <text x="245" y="272" text-anchor="middle" class="map-label">Casteljaloux</text>
+
+        <circle cx="100" cy="235" r="5" class="map-point"/>
+        <text x="100" y="252" text-anchor="middle" class="map-label">Meilhan-s-Garonne</text>
+
+        <circle cx="180" cy="70" r="5" class="map-point"/>
+        <text x="180" y="56" text-anchor="middle" class="map-label">Sainte-Bazeille</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ AVIS ============================ -->
+<section class="section section-alt" id="avis">
+  <div class="wrap">
+    <p class="eyebrow reveal center">Avis</p>
+    <h2 class="section-title reveal center">Ce qu'en disent mes clients</h2>
+
+    <div class="testi-grid reveal">
+      <blockquote class="testi-card">
+        <p>« J'avais un sommeil très perturbé depuis des mois. Après le forfait
+        de 5 séances, j'ai enfin retrouvé des nuits complètes. »</p>
+        <cite>— M., Marmande</cite>
+      </blockquote>
+      <blockquote class="testi-card">
+        <p>« Marie-Laurence se déplace à domicile pour ma mère qui a une mobilité
+        réduite : un vrai confort, et toujours le même accompagnement de qualité. »</p>
+        <cite>— S., Tonneins</cite>
+      </blockquote>
+      <blockquote class="testi-card">
+        <p>« Séances claires, sans jargon, avec des exercices simples que je
+        réutilise encore avant chaque entretien important. »</p>
+        <cite>— A., Casteljaloux</cite>
+      </blockquote>
+    </div>
+
+    <p class="testi-disclaimer">Témoignages fictifs à remplacer par de vrais avis clients.</p>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="section" id="faq">
+  <div class="wrap faq-wrap">
+    <p class="eyebrow reveal center">Questions fréquentes</p>
+    <h2 class="section-title reveal center">FAQ</h2>
+
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>Faut-il être malade pour consulter un sophrologue ?</summary>
+        <p>Non. La sophrologie s'adresse à toute personne qui souhaite mieux
+        gérer son stress, son sommeil ou une période de transition — elle ne
+        nécessite aucune prescription médicale, même si elle peut compléter un
+        suivi médical existant.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Combien de séances sont nécessaires ?</summary>
+        <p>Cela dépend de votre objectif. Certaines demandes ponctuelles se
+        travaillent en 3 à 5 séances, d'autres accompagnements plus profonds sur
+        8 à 10 séances. Le point est fait ensemble après la séance découverte.</p>
+      </details>
+      <details class="faq-item">
+        <summary>La sophrologie est-elle remboursée ?</summary>
+        <p>Elle n'est pas prise en charge par la Sécurité Sociale, mais de
+        nombreuses mutuelles remboursent une partie des séances via un forfait
+        « médecines douces ». Une facture vous est remise après chaque séance.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Comment se passe une séance à domicile ?</summary>
+        <p>Je m'installe dans une pièce calme de votre logement avec un tapis et
+        un coussin que j'apporte si besoin. Le déroulé est identique à une
+        séance en cabinet, avec 10&nbsp;€ de frais de déplacement inclus dans
+        le tarif affiché pour la zone de Marmande et ses environs.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Puis-je annuler ou reporter un rendez-vous ?</summary>
+        <p>Oui, jusqu'à 24h avant la séance sans frais. En dessous de ce délai,
+        la séance reste due sauf cas de force majeure.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ RESERVATION ============================ -->
+<section class="section section-booking" id="reservation">
+  <div class="wrap">
+    <p class="eyebrow reveal center">Réservation</p>
+    <h2 class="section-title reveal center">Réserver une séance</h2>
+    <p class="section-lead reveal center">
+      Choisissez une prestation, un créneau, puis laissez vos coordonnées —
+      je confirme le rendez-vous par email ou téléphone sous 24h.
+    </p>
+
+    <div class="booking-demo-flag reveal" role="note">
+      Chaque demande est transmise à Marie-Laurence, qui la confirme personnellement sous 24h.
+    </div>
+
+    <div class="booking-widget reveal" id="booking-widget">
+
+      <ol class="booking-steps" aria-hidden="true">
+        <li class="bstep is-active" data-step="1"><span>1</span>Prestation</li>
+        <li class="bstep" data-step="2"><span>2</span>Créneau</li>
+        <li class="bstep" data-step="3"><span>3</span>Coordonnées</li>
+        <li class="bstep" data-step="4"><span>4</span>Confirmation</li>
+      </ol>
+
+      <!-- STEP 1 -->
+      <div class="booking-panel is-active" data-panel="1">
+        <h3>Quelle prestation souhaitez-vous réserver ?</h3>
+        <div class="option-grid" id="prestation-options">
+          <button type="button" class="option-card" data-service="Séance découverte" data-price="55">
+            <span class="oc-name">Séance découverte</span>
+            <span class="oc-price">55&nbsp;€</span>
+            <span class="oc-duration">1h</span>
+          </button>
+          <button type="button" class="option-card" data-service="Séance individuelle" data-price="50">
+            <span class="oc-name">Séance individuelle</span>
+            <span class="oc-price">50&nbsp;€</span>
+            <span class="oc-duration">50 min</span>
+          </button>
+          <button type="button" class="option-card" data-service="Forfait 5 séances" data-price="225">
+            <span class="oc-name">Forfait 5 séances</span>
+            <span class="oc-price">225&nbsp;€</span>
+            <span class="oc-duration">45&nbsp;€ / séance</span>
+          </button>
+          <button type="button" class="option-card" data-service="Forfait 10 séances" data-price="420">
+            <span class="oc-name">Forfait 10 séances</span>
+            <span class="oc-price">420&nbsp;€</span>
+            <span class="oc-duration">42&nbsp;€ / séance</span>
+          </button>
+          <button type="button" class="option-card" data-service="Séance en visio" data-price="45">
+            <span class="oc-name">Séance en visio</span>
+            <span class="oc-price">45&nbsp;€</span>
+            <span class="oc-duration">45 min</span>
+          </button>
+          <button type="button" class="option-card" data-service="Séance duo" data-price="65">
+            <span class="oc-name">Séance duo</span>
+            <span class="oc-price">65&nbsp;€</span>
+            <span class="oc-duration">1h</span>
+          </button>
+        </div>
+
+        <fieldset class="lieu-fieldset">
+          <legend>Lieu de la séance</legend>
+          <label class="lieu-option">
+            <input type="radio" name="lieu" value="Cabinet" checked>
+            <span class="lieu-radio" aria-hidden="true"></span>
+            <span class="lieu-text"><strong>Au cabinet</strong><small>Marmande centre</small></span>
+          </label>
+          <label class="lieu-option">
+            <input type="radio" name="lieu" value="Domicile">
+            <span class="lieu-radio" aria-hidden="true"></span>
+            <span class="lieu-text"><strong>À domicile</strong><small>+10&nbsp;€ · zone Marmande</small></span>
+          </label>
+        </fieldset>
+
+        <div class="booking-actions">
+          <button type="button" class="btn btn-primary" id="to-step-2" disabled>Continuer</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="booking-panel" data-panel="2">
+        <h3>Choisissez un créneau</h3>
+        <p class="booking-hint">Créneaux illustratifs — à connecter à un agenda réel.</p>
+        <div class="calendar" id="calendar"></div>
+        <div class="slots" id="slots" aria-live="polite"></div>
+        <div class="booking-actions">
+          <button type="button" class="btn btn-ghost" data-back="1">Retour</button>
+          <button type="button" class="btn btn-primary" id="to-step-3" disabled>Continuer</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="booking-panel" data-panel="3">
+        <h3>Vos coordonnées</h3>
+        <form id="booking-form" novalidate>
+          <div class="form-row">
+            <label for="f-prenom">Prénom
+              <input type="text" id="f-prenom" name="prenom" required>
+            </label>
+            <label for="f-nom">Nom
+              <input type="text" id="f-nom" name="nom" required>
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="f-email">Email
+              <input type="email" id="f-email" name="email" required>
+            </label>
+            <label for="f-tel">Téléphone
+              <input type="tel" id="f-tel" name="tel" required>
+            </label>
+          </div>
+          <label for="f-message">Message (facultatif)
+            <textarea id="f-message" name="message" rows="3" placeholder="Précisions utiles avant la séance…"></textarea>
+          </label>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back="2">Retour</button>
+            <button type="submit" class="btn btn-primary">Récapitulatif</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="booking-panel" data-panel="4">
+        <div id="recap-view">
+          <h3>Vérifiez votre demande</h3>
+          <dl class="recap-list" id="recap-list"></dl>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back="3">Modifier</button>
+            <button type="button" class="btn btn-primary" id="confirm-booking">Confirmer la demande</button>
+          </div>
+        </div>
+        <div id="success-view" hidden>
+          <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20l6 6 10-12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Demande envoyée</h3>
+          <p>Merci ! Votre créneau est réservé le temps que Marie-Laurence valide
+          votre demande. Vous recevrez un email de confirmation (ou une
+          proposition d'un autre créneau) sous 24h.</p>
+          <button type="button" class="btn btn-outline" id="restart-booking">Faire une nouvelle demande</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <a href="#accueil" class="brand brand-footer">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="28" height="28">
+            <path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-text">Au fil de soi</span>
+      </a>
+      <p>Sophrologie caycédienne — Marie-Laurence Bonneau<br>Cabinet &amp; domicile, Grézet-Cavagnan (47)</p>
+    </div>
+
+    <div>
+      <h4>Contact</h4>
+      <p><a href="tel:+33600000000">06 00 00 00 00</a></p>
+      <p><a href="mailto:contact@aufildesoi.fr">contact@aufildesoi.fr</a></p>
+      <p>Grézet-Cavagnan, 47250</p>
+    </div>
+
+    <div>
+      <h4>Navigation</h4>
+      <p><a href="#prestations">Prestations</a></p>
+      <p><a href="#tarifs">Tarifs</a></p>
+      <p><a href="#reservation">Réserver</a></p>
+    </div>
+
+    <div>
+      <h4>Informations</h4>
+      <p><a href="#">Mentions légales</a></p>
+      <p>SIRET : 000 000 000 00000</p>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Au fil de soi — Sophrologie. Maquette de démonstration.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

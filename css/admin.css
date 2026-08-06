@@ -1,0 +1,40 @@
+.admin-body { background: var(--color-bg); min-height: 100vh; }
+
+.admin-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 2rem; border-bottom: 1px solid var(--color-line);
+  background: var(--color-card);
+}
+
+.admin-main { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+.admin-card {
+  background: var(--color-card); border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg); padding: 2.4rem;
+}
+
+.admin-login { max-width: 420px; margin: 3rem auto; }
+.admin-login form label { display: block; font-size: .86rem; font-weight: 600; color: var(--color-river-2); margin-bottom: 1.1rem; }
+.admin-login form input {
+  display: block; width: 100%; margin-top: .4rem; padding: .8em .9em;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: .95rem;
+}
+.admin-login .btn { width: 100%; margin-top: .4rem; }
+
+.admin-error { color: #A32D2D; font-size: .86rem; }
+
+.admin-hint { color: var(--color-ink-soft); font-size: .9rem; }
+.admin-subtitle { margin-top: 3rem; font-size: 1.3rem; }
+
+.admin-list { display: flex; flex-direction: column; gap: 1rem; margin: 1.6rem 0; }
+
+.req-card {
+  background: var(--color-card); border: 1px solid var(--color-line); border-radius: var(--radius-md);
+  padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; gap: 1.2rem; align-items: flex-start; flex-wrap: wrap;
+}
+.req-main strong { display: block; font-family: var(--font-display); font-size: 1.05rem; color: var(--color-river-2); }
+.req-main span { display: block; font-size: .86rem; color: var(--color-ink-soft); margin-top: .15rem; }
+.req-main .req-meta { font-family: var(--font-mono); font-size: .78rem; margin-top: .5rem; }
+
+.req-actions { display: flex; gap: .6rem; align-items: center; }
+.req-status { font-family: var(--font-mono); font-size: .78rem; padding: .3em .8em; border-radius: 999px; background: var(--color-bg-alt); }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableau de bord — Au fil de soi</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Page privée : réservée à la sophrologue. Protégée par l'authentification
+     Supabase (voir README.md — un seul compte doit exister, créé manuellement
+     depuis le dashboard Supabase). Ne jamais activer l'inscription publique. -->
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+  <span class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="28" height="28"><path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </span>
+    <span class="brand-text">Au fil de soi</span>
+  </span>
+  <button type="button" class="btn btn-ghost btn-small" id="logout-btn" hidden>Se déconnecter</button>
+</header>
+
+<main class="admin-main">
+
+  <!-- ---------- LOGIN ---------- -->
+  <section id="login-view" class="admin-card admin-login">
+    <h1>Tableau de bord</h1>
+    <p>Connectez-vous avec votre compte pour gérer les demandes de rendez-vous.</p>
+    <form id="login-form">
+      <label for="l-email">Email
+        <input type="email" id="l-email" required autocomplete="username">
+      </label>
+      <label for="l-password">Mot de passe
+        <input type="password" id="l-password" required autocomplete="current-password">
+      </label>
+      <p class="admin-error" id="login-error" hidden></p>
+      <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
+  </section>
+
+  <!-- ---------- DASHBOARD ---------- -->
+  <section id="dashboard-view" hidden>
+    <h1>Demandes en attente</h1>
+    <p class="admin-hint">Validez ou refusez chaque demande — le client reçoit automatiquement un email avec votre décision.</p>
+
+    <div id="pending-list" class="admin-list" aria-live="polite"></div>
+    <p id="pending-empty" class="admin-hint" hidden>Aucune demande en attente pour le moment.</p>
+
+    <h2 class="admin-subtitle">Rendez-vous à venir</h2>
+    <div id="upcoming-list" class="admin-list"></div>
+    <p id="upcoming-empty" class="admin-hint" hidden>Aucun rendez-vous confirmé à venir.</p>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
