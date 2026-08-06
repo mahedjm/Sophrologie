@@ -150,7 +150,7 @@ img, svg { display: block; max-width: 100%; }
 /* =========================================================
    HERO
    ========================================================= */
-.hero { position: relative; padding: 7.5rem 0 6rem; overflow: hidden; }
+.hero { position: relative; padding: 3.5rem 0 6rem; overflow: hidden; }
 .hero-waves { position: absolute; inset: auto 0 0 0; height: 60%; opacity: .55; pointer-events: none; }
 .hero-waves svg { width: 100%; height: 100%; }
 .wave { fill: none; stroke-width: 2; }
@@ -451,7 +451,7 @@ img, svg { display: block; max-width: 100%; }
   .section { padding: 3rem 0; }
 
   /* Hero : beaucoup moins d'espace vide en bas, vagues plus discrètes */
-  .hero { padding-top: 6rem; padding-bottom: 2rem; }
+  .hero { padding-top: 2.5rem; padding-bottom: 2rem; }
   .hero-waves { opacity: .3; }
   .hero-cta .btn-ghost {
     background: rgba(242, 240, 231, .82);
