@@ -304,10 +304,10 @@ img, svg { display: block; max-width: 100%; }
 
 .booking-steps { list-style: none; display: flex; padding: 0; margin: 0 0 2.4rem; gap: .5rem; }
 .bstep { flex: 1; text-align: center; font-family: var(--font-mono); font-size: .74rem; color: var(--color-ink-soft); position: relative; padding-bottom: .8rem; border-bottom: 3px solid var(--color-line); }
-.bstep span { display: block; margin: 0 auto .4rem; width: 24px; height: 24px; border-radius: 50%; background: var(--color-line); color: #fff; font-size: .78rem; line-height: 24px; }
+.bstep-num { display: block; margin: 0 auto .4rem; width: 24px; height: 24px; border-radius: 50%; background: var(--color-line); color: #fff; font-size: .78rem; line-height: 24px; text-align: center; }
 .bstep.is-active { color: var(--color-river-2); font-weight: 600; border-color: var(--color-plum); }
-.bstep.is-active span { background: var(--color-plum); }
-.bstep.is-done span { background: var(--color-river-soft); }
+.bstep.is-active .bstep-num { background: var(--color-plum); }
+.bstep.is-done .bstep-num { background: var(--color-river-soft); }
 
 .booking-panel { display: none; }
 .booking-panel.is-active { display: block; animation: fadein .35s var(--ease); }
@@ -470,16 +470,16 @@ img, svg { display: block; max-width: 100%; }
   }
   .step-content h3 { margin-bottom: .3em; }
 
-  /* Prestations : 2 colonnes, cartes resserrées */
+  /* Prestations : 2 colonnes, cartes resserrées, contenu centré */
   .cards-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
-  .p-card { padding: 1.1rem .95rem; }
+  .p-card { padding: 1.1rem .95rem; text-align: center; }
   .p-icon { width: 26px; height: 26px; margin-bottom: .5rem; }
   .p-card h3 { font-size: .92rem; }
   .p-card p { font-size: .8rem; }
 
-  /* Tarifs : 2 colonnes, on retire le détail des listes pour rester lisible */
+  /* Tarifs : 2 colonnes, contenu centré, listes masquées pour rester lisible */
   .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
-  .price-card { padding: 1.1rem .9rem; }
+  .price-card { padding: 1.1rem .9rem; align-items: center; text-align: center; }
   .price-card h3 { font-size: .88rem; }
   .price .amount { font-size: 1.6rem; }
   .price .unit { font-size: .82rem; }
@@ -489,14 +489,31 @@ img, svg { display: block; max-width: 100%; }
   .price-card .btn { width: 100%; }
 
   .option-grid { grid-template-columns: repeat(2, 1fr); gap: .7rem; }
-  .option-card { padding: .9rem 1rem; min-height: 78px; }
+  .option-card { padding: .9rem 1rem; min-height: 78px; align-items: center; text-align: center; }
   .oc-name { font-size: .88rem; }
   .oc-price { font-size: 1.25rem; }
   .oc-duration { font-size: .74rem; }
   #booking-form .form-row { grid-template-columns: 1fr; }
   .booking-widget { padding: 1.6rem; }
-  .booking-steps span { display: none; }
+  .booking-steps { margin-bottom: 1.8rem; }
+  .bstep {
+    flex: none; display: flex; align-items: center; gap: .4rem;
+    text-align: left; padding-bottom: .6rem;
+  }
+  .bstep-num { margin: 0; }
+  .bstep-label { display: none; font-size: .78rem; white-space: nowrap; }
+  .bstep.is-active { flex: 1; }
+  .bstep.is-active .bstep-label { display: inline; }
   .booking-actions { flex-direction: column; }
   .booking-actions .btn { width: 100%; }
   .footer-inner { grid-template-columns: 1fr; }
+
+  /* Témoignages : citation centrée, comme une vraie carte-citation */
+  .testi-card { text-align: center; }
+
+  /* Tags "Adultes / Ados / ..." centrés sous la bio */
+  .about-tags { justify-content: center; }
+
+  /* Cabinet / Domicile : les deux blocs centrés, empilés proprement */
+  .zone-info { flex-direction: column; align-items: center; text-align: center; gap: 1.2rem; }
 }

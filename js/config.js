@@ -7,8 +7,8 @@
 //                        celle-ci doit rester secrète côté serveur)
 // =========================================================
 
-const SUPABASE_URL = 'https://VOTRE-PROJET.supabase.co';
-const SUPABASE_ANON_KEY = 'VOTRE_CLE_ANON_PUBLIC';
+const SUPABASE_URL = 'https://jtvztegdisffntldrkqc.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_S_HgrBMSBe51eShESnDuXw_EVwKgO_h';
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
