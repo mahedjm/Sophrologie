@@ -187,6 +187,30 @@ img, svg { display: block; max-width: 100%; }
 .about-caption { display: block; margin-top: 1rem; font-family: var(--font-mono); font-size: .78rem; color: var(--color-ink-soft); }
 
 .about-role { font-weight: 600; color: var(--color-plum); }
+
+.about-more summary {
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .04em;
+  color: var(--color-plum);
+  font-weight: 600;
+  margin: -.2em 0 1em;
+}
+.about-more summary::-webkit-details-marker { display: none; }
+.about-more summary:hover { color: var(--color-plum-2); }
+.about-more .about-more-arrow { transition: transform .25s var(--ease); }
+.about-more[open] .about-more-arrow { transform: rotate(180deg); }
+.about-more[open] summary { margin-bottom: .8em; }
+.about-more-label-open { display: none; }
+.about-more[open] .about-more-label { display: none; }
+.about-more[open] .about-more-label-open { display: inline; }
+.about-more p:last-child { margin-bottom: 0; }
+
 .about-tags { list-style: none; padding: 0; margin: 1.6rem 0 0; display: flex; flex-wrap: wrap; gap: .6rem; }
 .about-tags li { font-family: var(--font-mono); font-size: .78rem; background: var(--color-card); border: 1px solid var(--color-line); padding: .5em 1em; border-radius: 999px; }
 
@@ -373,7 +397,8 @@ img, svg { display: block; max-width: 100%; }
 .calendar-weekdays { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .6rem; margin-bottom: .5rem; }
 .calendar-weekdays span { text-align: center; font-family: var(--font-mono); font-size: .68rem; font-weight: 500; color: var(--color-ink-soft); text-transform: uppercase; }
 
-.calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .6rem; margin-bottom: 1.4rem; }
+.calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .6rem; margin-bottom: 1.4rem; align-content: start; min-height: 360px; }
+.calendar .booking-hint { grid-column: 1 / -1; text-align: center; margin: 1.4rem 0 0; }
 .cal-day {
   aspect-ratio: 1; min-height: 52px; border-radius: 8px; border: 2px solid var(--color-line); background: #fff;
   display: flex; align-items: center; justify-content: center;
@@ -489,6 +514,8 @@ img, svg { display: block; max-width: 100%; }
   .p-card p { font-size: .8rem; }
 
   /* Tarifs : 2 colonnes, contenu centré, listes masquées pour rester lisible */
+  .tarif-toggle { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+  .toggle-btn { text-align: center; padding: .75em 1em; }
   .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
   .price-card { padding: 1.1rem .9rem; align-items: center; text-align: center; }
   .price-card h3 { font-size: .88rem; }
@@ -504,13 +531,26 @@ img, svg { display: block; max-width: 100%; }
   .oc-name { font-size: .88rem; }
   .oc-price { font-size: 1.25rem; }
   .oc-duration { font-size: .74rem; }
-  #booking-form .form-row { grid-template-columns: 1fr; }
+  #booking-form .form-row { grid-template-columns: 1fr; gap: 0; }
   .booking-widget { padding: 1.6rem; }
+
+  /* Coordonnées : même espacement partout, légèrement resserré */
+  [data-panel="3"] h3 { margin-bottom: .8rem; }
+  #booking-form label { margin-bottom: .8rem; }
+  [data-panel="3"] .booking-actions { margin-top: 1.2rem; }
+
+  /* Calendrier : espaces resserrés autour du titre et avant le bouton retour */
+  [data-panel="2"] h3 { margin-bottom: .15em; }
+  [data-panel="2"] .booking-hint { margin-bottom: .2rem; }
+  .calendar-nav { margin-bottom: .3rem; }
+  .calendar-weekdays { margin-bottom: .15rem; }
   .calendar-weekdays, .calendar { gap: .35rem; }
+  .calendar { min-height: 232px; margin-bottom: .8rem; }
   .calendar-weekdays span { font-size: .58rem; }
   .cal-day { min-height: 34px; font-size: .8rem; border-width: 1.5px; }
   .cal-month-label { font-size: .96rem; }
-  .slots { gap: .45rem; }
+  .slots { gap: .45rem; margin-bottom: .2rem; }
+  [data-panel="2"] .booking-actions { margin-top: 1.2rem; }
   .slot-btn { font-size: .78rem; padding: .5em .4em; min-height: 38px; border-width: 1.5px; }
   .booking-steps { margin-bottom: 1.8rem; }
   .bstep {
