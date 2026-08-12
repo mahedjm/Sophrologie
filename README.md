@@ -1,7 +1,8 @@
 # Au fil de soi — Site de sophrologie (maquette)
 
-Maquette statique HTML / CSS / JS pour un site de sophrologue (cabinet + domicile,
-zone de Marmande). Aucune dépendance, aucun framework — prête à être hébergée sur
+Maquette statique HTML / CSS / JS pour un site de sophrologue (suivi individuel
+en visio, séances de groupe chez un particulier, zone de Marmande). Aucune
+dépendance, aucun framework — prête à être hébergée sur
 **GitHub Pages** pour test et validation avec la cliente.
 
 ## Structure
@@ -46,11 +47,11 @@ Le site sera disponible à `https://<ton-compte>.github.io/<nom-repo>/` après
 Tout est signalé par un commentaire `<!-- ... -->` en haut du `index.html`, en résumé :
 
 - Nom de la sophrologue, bio, diplômes, année d'installation
-- Coordonnées : téléphone, email, adresse du cabinet, SIRET
+- Coordonnées : téléphone, email, adresse (base pour les séances de groupe), SIRET
 - Prestations, tarifs et formules (actuellement basés sur des fourchettes de
   marché réalistes en 2026 pour une petite ville : 45-60 €/séance individuelle
-  en zone rurale, forfaits dégressifs -10 % à -16 %, +10 € pour un déplacement
-  à domicile)
+  en zone rurale, forfaits dégressifs -10 % à -16 %, séances de groupe chez un
+  particulier sur devis à partir de 25 €/personne)
 - Zone d'intervention (villes autour de Marmande)
 - Avis clients (actuellement fictifs)
 - Le monogramme SVG "CV" en section "Qui suis-je" → à remplacer par une vraie photo

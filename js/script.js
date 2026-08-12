@@ -38,28 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =========================================================
-     TARIFS — bascule Cabinet / Domicile
-     Ajoute simplement 10€ aux montants affichés (hors visio).
-     ========================================================= */
-  const toggleBtns = document.querySelectorAll('.toggle-btn');
-  const amounts = document.querySelectorAll('.price .amount');
-
-  toggleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggleBtns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      const isDomicile = btn.dataset.lieu === 'domicile';
-
-      amounts.forEach(el => {
-        const base = parseInt(el.dataset.base, 10);
-        const noDomicile = el.dataset.noDomicile === 'true';
-        const value = (isDomicile && !noDomicile) ? base + 10 : base;
-        el.textContent = value;
-      });
-    });
-  });
-
-  /* =========================================================
      MODULE DE RÉSERVATION — connecté à Supabase
      -----------------------------------------------------------
      Tunnel complet (prestation -> créneau -> coordonnées ->
@@ -94,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     statusNote.textContent = 'Mode démonstration — créneaux fictifs. Renseignez js/config.js pour activer les vraies réservations.';
   }
 
-  const state = { service: null, price: null, lieu: 'Cabinet', date: null, time: null };
+  const state = { service: null, price: null, lieu: null, date: null, time: null };
 
   const panels = widget.querySelectorAll('.booking-panel');
   const steps = widget.querySelectorAll('.bstep');
@@ -116,6 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---- STEP 1 : Prestation + lieu ---- */
   const prestationOptions = document.querySelectorAll('#prestation-options .option-card');
   const toStep2 = document.getElementById('to-step-2');
+  const lieuNote = document.getElementById('lieu-note');
+  const GROUPE_LIEU = "Chez l'organisateur (groupe)";
+  const VISIO_LIEU = 'Visio';
 
   function selectPrestation(serviceName) {
     const card = Array.from(prestationOptions).find(c => c.dataset.service === serviceName);
@@ -125,6 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
     state.service = card.dataset.service;
     state.price = parseInt(card.dataset.price, 10);
     toStep2.disabled = false;
+
+    const isGroupe = state.service === 'Séance de groupe';
+    state.lieu = isGroupe ? GROUPE_LIEU : VISIO_LIEU;
+    lieuNote.classList.add('is-visible');
+    lieuNote.textContent = isGroupe
+      ? "Séance organisée chez vous ou chez l'un des participants (minimum 3 personnes, zone Marmande et environs)."
+      : 'Séance en visio — le lien de connexion vous sera envoyé par email.';
   }
 
   prestationOptions.forEach(card => {
@@ -136,21 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-select-service]').forEach(link => {
     link.addEventListener('click', () => selectPrestation(link.dataset.selectService));
   });
-
-  widget.querySelectorAll('input[name="lieu"]').forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      state.lieu = e.target.value;
-      syncLieuUI();
-    });
-  });
-
-  function syncLieuUI() {
-    widget.querySelectorAll('.lieu-option').forEach(opt => {
-      const input = opt.querySelector('input[name="lieu"]');
-      opt.classList.toggle('is-checked', input.checked);
-    });
-  }
-  syncLieuUI();
 
   toStep2.addEventListener('click', () => goToStep(2));
 
@@ -324,13 +297,17 @@ document.addEventListener('DOMContentLoaded', () => {
     return date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
   }
 
+  function formatPrice() {
+    return state.service === 'Séance de groupe' ? 'Sur devis' : `${state.price} €`;
+  }
+
   function renderRecap() {
     recapList.innerHTML = `
       <dt>Prestation</dt><dd>${state.service}</dd>
       <dt>Lieu</dt><dd>${state.lieu}</dd>
       <dt>Date</dt><dd>${formatDate(state.date)}</dd>
       <dt>Heure</dt><dd>${state.time}</dd>
-      <dt>Tarif indicatif</dt><dd>${state.lieu === 'Domicile' ? state.price + 10 : state.price} €</dd>
+      <dt>Tarif indicatif</dt><dd>${formatPrice()}</dd>
       <dt>Contact</dt><dd>${state.prenom} ${state.nom} — ${state.email}</dd>
     `;
   }
@@ -339,11 +316,9 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmBtn.disabled = true;
     confirmBtn.textContent = 'Envoi…';
 
-    const finalPrice = state.lieu === 'Domicile' ? state.price + 10 : state.price;
-
     const { error } = await supabaseClient.from('reservations').insert({
       prestation: state.service,
-      prix: finalPrice,
+      prix: state.price,
       lieu: state.lieu,
       date_seance: state.dateISO,
       heure_seance: state.time,
@@ -377,10 +352,10 @@ document.addEventListener('DOMContentLoaded', () => {
   restartBtn.addEventListener('click', () => {
     form.reset();
     state.service = state.price = state.date = state.dateISO = state.time = null;
-    state.lieu = 'Cabinet';
+    state.lieu = null;
     prestationOptions.forEach(c => c.classList.remove('is-selected'));
-    widget.querySelector('input[name="lieu"][value="Cabinet"]').checked = true;
-    syncLieuUI();
+    lieuNote.classList.remove('is-visible');
+    lieuNote.textContent = '';
     toStep2.disabled = true;
     toStep3.disabled = true;
     recapView.hidden = false;

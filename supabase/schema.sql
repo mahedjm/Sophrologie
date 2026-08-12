@@ -9,7 +9,7 @@ create table if not exists reservations (
   created_at    timestamptz not null default now(),
   prestation    text not null,
   prix          numeric not null,
-  lieu          text not null check (lieu in ('Cabinet', 'Domicile')),
+  lieu          text not null check (lieu in ('Visio', 'Chez l''organisateur (groupe)')),
   date_seance   date not null,
   heure_seance  text not null,              -- format 'HH:MM', ex '09:00'
   prenom        text not null,

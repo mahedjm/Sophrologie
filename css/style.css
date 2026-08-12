@@ -239,16 +239,6 @@ img, svg { display: block; max-width: 100%; }
 /* =========================================================
    TARIFS
    ========================================================= */
-.tarif-toggle { display: flex; justify-content: center; gap: .5rem; margin-bottom: 2.6rem; }
-.toggle-btn {
-  font-family: var(--font-body); font-weight: 600; font-size: .92rem;
-  background: var(--color-card); border: 2px solid var(--color-line);
-  padding: .75em 1.5em; min-height: 44px; border-radius: 999px; cursor: pointer; color: var(--color-ink-soft);
-  transition: all .25s var(--ease);
-}
-.toggle-btn span { font-family: var(--font-mono); font-weight: 400; }
-.toggle-btn.is-active { background: var(--color-river-2); color: #fff; border-color: var(--color-river-2); }
-
 .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
 .price-card {
   position: relative; background: var(--color-card); border: 1px solid var(--color-line);
@@ -262,6 +252,7 @@ img, svg { display: block; max-width: 100%; }
 .price-card h3 { font-size: 1.15rem; }
 .price { font-family: var(--font-mono); display: flex; align-items: baseline; gap: .2em; margin: .3em 0; }
 .price .amount { font-size: 2.3rem; color: var(--color-river-2); font-weight: 500; transition: color .2s; }
+.price .amount-devis { font-size: 1.5rem; }
 .price .unit { font-size: 1.1rem; color: var(--color-ink-soft); }
 .price-meta { font-size: .84rem; color: var(--color-ink-soft); margin-bottom: 1.2rem; }
 .price-card ul { list-style: none; padding: 0; margin: 0 0 1.6rem; flex: 1; }
@@ -350,39 +341,9 @@ img, svg { display: block; max-width: 100%; }
 .option-card:hover { transform: translateY(-2px); border-color: var(--color-ochre); }
 .option-card.is-selected { border-color: var(--color-plum); background: #FBF3F0; }
 
-.lieu-fieldset { border: none; padding: 0; margin: 0 0 1.8rem; display: flex; flex-direction: column; gap: .8rem; }
-.lieu-fieldset legend { font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase; color: var(--color-ink-soft); margin-bottom: .3rem; padding: 0; }
-
-.lieu-option {
-  position: relative; display: flex; align-items: center; gap: 1rem;
-  background: #fff; border: 2px solid var(--color-line); border-radius: var(--radius-md);
-  padding: 1rem 1.2rem; cursor: pointer; min-height: 60px;
-  transition: border-color .2s, background .2s;
-}
-.lieu-option input {
-  position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer;
-}
-.lieu-radio {
-  flex: none; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--color-line);
-  display: inline-flex; align-items: center; justify-content: center; transition: border-color .2s;
-}
-.lieu-radio::after {
-  content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--color-plum);
-  transform: scale(0); transition: transform .18s var(--ease);
-}
-.lieu-option.is-checked { border-color: var(--color-plum); background: #FBF3F0; }
-.lieu-option.is-checked .lieu-radio { border-color: var(--color-plum); }
-.lieu-option.is-checked .lieu-radio::after { transform: scale(1); }
-.lieu-option input:focus-visible ~ .lieu-radio { outline: 3px solid var(--color-ochre); outline-offset: 2px; }
-.lieu-text strong { display: block; font-size: 1rem; color: var(--color-river-2); }
-.lieu-text small { display: block; font-family: var(--font-mono); font-size: .8rem; color: var(--color-ink-soft); margin-top: .15rem; }
-
-@media (min-width: 481px) {
-  .lieu-fieldset { flex-direction: row; }
-  .lieu-option { flex: 1; }
-}
-
 .booking-hint { font-family: var(--font-mono); font-size: .78rem; color: var(--color-ink-soft); margin-bottom: .6rem; }
+#lieu-note { min-height: 2.4em; visibility: hidden; }
+#lieu-note.is-visible { visibility: visible; }
 
 .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
 .cal-nav-btn {
@@ -514,8 +475,6 @@ img, svg { display: block; max-width: 100%; }
   .p-card p { font-size: .8rem; }
 
   /* Tarifs : 2 colonnes, contenu centré, listes masquées pour rester lisible */
-  .tarif-toggle { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
-  .toggle-btn { text-align: center; padding: .75em 1em; }
   .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
   .price-card { padding: 1.1rem .9rem; align-items: center; text-align: center; }
   .price-card h3 { font-size: .88rem; }
@@ -571,6 +530,6 @@ img, svg { display: block; max-width: 100%; }
   /* Tags "Adultes / Ados / ..." centrés sous la bio */
   .about-tags { justify-content: center; }
 
-  /* Cabinet / Domicile : les deux blocs centrés, empilés proprement */
+  /* Visio / Groupe : les blocs centrés, empilés proprement */
   .zone-info { flex-direction: column; align-items: center; text-align: center; gap: 1.2rem; }
 }
