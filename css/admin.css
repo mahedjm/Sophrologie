@@ -38,3 +38,22 @@
 
 .req-actions { display: flex; gap: .6rem; align-items: center; }
 .req-status { font-family: var(--font-mono); font-size: .78rem; padding: .3em .8em; border-radius: 999px; background: var(--color-bg-alt); }
+
+.req-price {
+  display: flex; align-items: center; gap: .5rem; margin-top: .7rem;
+  font-family: var(--font-mono); font-size: .78rem; color: var(--color-ink-soft);
+}
+.req-price input {
+  width: 5.5em; padding: .35em .5em; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-line); font-family: var(--font-mono); font-size: .9rem;
+}
+
+.admin-atelier-form { margin: 1.6rem 0; padding: 1.8rem; }
+.admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.admin-atelier-form label { display: block; font-size: .86rem; font-weight: 600; color: var(--color-river-2); margin-bottom: 1.1rem; }
+.admin-atelier-form input {
+  display: block; width: 100%; margin-top: .4rem; padding: .7em .9em;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: .95rem;
+}
+
+.atelier-card .req-status.is-complet { background: #E8D8D2; color: #7C4A5C; }

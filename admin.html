@@ -55,6 +55,45 @@
     <h2 class="admin-subtitle">Rendez-vous à venir</h2>
     <div id="upcoming-list" class="admin-list"></div>
     <p id="upcoming-empty" class="admin-hint" hidden>Aucun rendez-vous confirmé à venir.</p>
+
+    <h2 class="admin-subtitle">Séances de groupe ouvertes</h2>
+    <p class="admin-hint">Créez un créneau récurrent (ex : atelier du mardi) — les clients réservent et paient directement leur place tant qu'il en reste.</p>
+
+    <form id="atelier-form" class="admin-card admin-atelier-form">
+      <div class="admin-form-row">
+        <label for="a-titre">Titre
+          <input type="text" id="a-titre" required placeholder="Atelier gestion du stress">
+        </label>
+        <label for="a-lieu">Lieu
+          <input type="text" id="a-lieu" required placeholder="Salle des fêtes, Marmande">
+        </label>
+      </div>
+      <div class="admin-form-row">
+        <label for="a-date">Date
+          <input type="date" id="a-date" required>
+        </label>
+        <label for="a-heure">Heure
+          <input type="time" id="a-heure" required>
+        </label>
+      </div>
+      <div class="admin-form-row">
+        <label for="a-capacite">Places
+          <input type="number" id="a-capacite" min="1" step="1" required value="10">
+        </label>
+        <label for="a-prix">Prix / place (€)
+          <input type="number" id="a-prix" min="0" step="0.5" required value="20">
+        </label>
+      </div>
+      <p class="admin-error" id="atelier-error" hidden></p>
+      <button type="submit" class="btn btn-primary btn-small">Créer la séance</button>
+    </form>
+
+    <div id="ateliers-list" class="admin-list"></div>
+    <p id="ateliers-empty" class="admin-hint" hidden>Aucune séance de groupe ouverte à venir.</p>
+
+    <h2 class="admin-subtitle">Demandes de devis</h2>
+    <div id="devis-list" class="admin-list"></div>
+    <p id="devis-empty" class="admin-hint" hidden>Aucune demande de devis en attente.</p>
   </section>
 
 </main>

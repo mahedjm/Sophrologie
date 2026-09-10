@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paiement de votre séance — Au fil de soi</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Page publique mais non indexée : atteinte via le lien de paiement envoyé
+     par email après confirmation d'un rendez-vous. Crée une session Stripe
+     Checkout à la volée (voir supabase/functions/create-checkout-session)
+     puis redirige vers Stripe. -->
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+  <span class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="28" height="28"><path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </span>
+    <span class="brand-text">Au fil de soi</span>
+  </span>
+</header>
+
+<main class="admin-main">
+  <section class="admin-card admin-login">
+    <h1>Paiement de votre séance</h1>
+    <p class="admin-hint" id="payer-message">Préparation du paiement sécurisé…</p>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/payer.js"></script>
+</body>
+</html>

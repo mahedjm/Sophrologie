@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merci — Au fil de soi</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Page d'atterrissage générique pour le success_url de Stripe Checkout.
+     Volontairement statique (pas de lecture Supabase) : la confirmation
+     réelle du paiement passe par le webhook, qui peut arriver avec un
+     léger décalage par rapport à la redirection Stripe. -->
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+  <span class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="28" height="28"><path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </span>
+    <span class="brand-text">Au fil de soi</span>
+  </span>
+</header>
+
+<main class="admin-main">
+  <section class="admin-card admin-login">
+    <h1>Merci !</h1>
+    <p class="admin-hint">Votre paiement a bien été pris en compte. Vous allez recevoir
+    un email de confirmation avec les détails de votre séance et un lien pour
+    l'annuler si besoin.</p>
+    <a href="index.html" class="btn btn-primary">Retour au site</a>
+  </section>
+</main>
+
+</body>
+</html>

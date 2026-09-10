@@ -236,6 +236,21 @@ img, svg { display: block; max-width: 100%; }
 .p-card h3 { font-size: 1.08rem; margin-bottom: .4em; }
 .p-card p { font-size: .92rem; margin: 0; }
 
+.pillars-grid { grid-template-columns: repeat(3, 1fr); }
+.pillar-link {
+  display: inline-block; margin-top: 1rem; font-family: var(--font-mono); font-size: .8rem;
+  font-weight: 600; color: var(--color-plum); text-decoration: none;
+}
+.pillar-link:hover { color: var(--color-plum-2); }
+
+/* =========================================================
+   OFFER DETAIL (formats B2B/groupe sur offres.html)
+   ========================================================= */
+.offer-detail { max-width: 700px; }
+.offer-detail ul { list-style: none; padding: 0; margin: 1.6rem auto 2rem; max-width: 460px; text-align: left; }
+.offer-detail li { font-size: .95rem; padding-left: 1.3em; position: relative; margin-bottom: .6em; color: var(--color-ink-soft); }
+.offer-detail li::before { content: "—"; position: absolute; left: 0; color: var(--color-ochre); }
+
 /* =========================================================
    TARIFS
    ========================================================= */
@@ -342,8 +357,12 @@ img, svg { display: block; max-width: 100%; }
 .option-card.is-selected { border-color: var(--color-plum); background: #FBF3F0; }
 
 .booking-hint { font-family: var(--font-mono); font-size: .78rem; color: var(--color-ink-soft); margin-bottom: .6rem; }
-#lieu-note { min-height: 2.4em; visibility: hidden; }
-#lieu-note.is-visible { visibility: visible; }
+
+.details-field { display: block; font-size: .9rem; font-weight: 600; color: var(--color-river-2); margin: 1.4rem 0; }
+.details-field input {
+  display: block; width: 160px; margin-top: .5rem; padding: .85em 1em; border-radius: var(--radius-sm);
+  border: 2px solid var(--color-line); font-family: var(--font-body); font-size: 1rem; background: #fff; min-height: 52px;
+}
 
 .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
 .cal-nav-btn {
@@ -395,6 +414,27 @@ img, svg { display: block; max-width: 100%; }
 .success-icon { color: var(--color-plum); width: 52px; margin: 0 auto 1rem; }
 #success-view { text-align: center; }
 #success-view .btn { margin-top: .6rem; }
+
+/* =========================================================
+   DEVIS FORM (contact.html)
+   ========================================================= */
+.devis-widget { max-width: 640px; margin: 0 auto; background: var(--color-card); border: 1px solid var(--color-line); border-radius: var(--radius-lg); padding: 2.4rem; }
+#devis-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+#devis-form label { display: block; font-size: .9rem; font-weight: 600; color: var(--color-river-2); margin-bottom: 1.3rem; }
+#devis-form input, #devis-form textarea, #devis-form select {
+  display: block; width: 100%; margin-top: .5rem; padding: .95em 1.1em; border-radius: var(--radius-sm);
+  border: 2px solid var(--color-line); font-family: var(--font-body); font-size: 1rem; background: #fff;
+  min-height: 52px; transition: border-color .2s, box-shadow .2s;
+}
+#devis-form textarea { min-height: 110px; resize: vertical; }
+#devis-form input:focus, #devis-form textarea:focus, #devis-form select:focus { border-color: var(--color-plum); box-shadow: 0 0 0 4px rgba(124,74,92,.14); outline: none; }
+#devis-form .booking-actions { justify-content: flex-start; }
+#devis-success { text-align: center; }
+
+@media (max-width: 620px) {
+  .devis-widget { padding: 1.6rem; }
+  #devis-form .form-row { grid-template-columns: 1fr; gap: 0; }
+}
 
 /* =========================================================
    FOOTER

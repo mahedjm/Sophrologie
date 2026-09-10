@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annuler ma séance — Au fil de soi</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Page publique mais non indexée : atteinte via le lien d'annulation envoyé
+     par email après paiement d'un rendez-vous. Le remboursement (intégral
+     si +24h avant la séance, 50% en deçà) est calculé côté serveur, voir
+     supabase/functions/cancel-reservation. -->
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+  <span class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="28" height="28"><path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </span>
+    <span class="brand-text">Au fil de soi</span>
+  </span>
+</header>
+
+<main class="admin-main">
+  <section class="admin-card admin-login">
+    <h1>Annuler ma séance</h1>
+    <p class="admin-hint" id="cancel-message">Chargement…</p>
+
+    <div id="cancel-details" hidden>
+      <p class="admin-hint">Montant remboursé : <strong id="cancel-refund-amount"></strong></p>
+      <p class="admin-hint">Politique : remboursement intégral si annulation plus de 24h avant
+      la séance, 50% conservé en deçà.</p>
+      <button type="button" class="btn btn-primary" id="cancel-confirm-btn">Confirmer l'annulation</button>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/annulation.js"></script>
+</body>
+</html>

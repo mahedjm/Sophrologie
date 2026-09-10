@@ -1,0 +1,27 @@
+# =========================================================
+# Configuration des Edge Functions Supabase
+# -----------------------------------------------------------
+# Ces fonctions sont appelées sans session utilisateur authentifiée
+# (Stripe, un visiteur anonyme muni seulement de la clé publique, ou une
+# tâche planifiée pg_cron) : la vérification JWT par défaut de la
+# passerelle les rejetterait sinon. Chacune se protège alors autrement
+# (signature Stripe, jeton opaque en base, secret partagé — voir le
+# commentaire en tête de chaque fonction). Les autres fonctions
+# (notify-new-request, notify-devis-request, send-status-email) gardent
+# la vérification par défaut.
+# =========================================================
+
+[functions.stripe-webhook]
+verify_jwt = false
+
+[functions.create-checkout-session]
+verify_jwt = false
+
+[functions.cancel-reservation]
+verify_jwt = false
+
+[functions.create-atelier-reservation]
+verify_jwt = false
+
+[functions.send-reminders]
+verify_jwt = false

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réserver une séance — Au fil de soi</title>
+<meta name="description" content="Réservez votre séance individuelle, un atelier privé à domicile ou une place sur une séance de groupe ouverte — paiement sécurisé en ligne.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<!-- ============================ HEADER ============================ -->
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="34" height="34">
+          <path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-text">Au fil de soi</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+      <a href="a-propos.html">Qui suis-je</a>
+      <a href="offres.html">Offres &amp; tarifs</a>
+      <a href="reservation.html">Réservation</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html#faq">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="reservation.html" class="btn btn-primary btn-small">Réserver</a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================ RESERVATION ============================ -->
+<section class="section section-booking" id="reservation">
+  <div class="wrap">
+    <p class="eyebrow reveal center">Réservation</p>
+    <h1 class="section-title reveal center">Réserver une séance</h1>
+    <p class="section-lead reveal center" id="booking-status-note">
+      Choisissez un format, un créneau, puis laissez vos coordonnées.
+    </p>
+
+    <div class="booking-widget reveal" id="booking-widget">
+
+      <ol class="booking-steps" aria-hidden="true">
+        <li class="bstep is-active" data-step="format"><span class="bstep-num">1</span><span class="bstep-label">Format</span></li>
+        <li class="bstep" data-step="details"><span class="bstep-num">2</span><span class="bstep-label">Détails</span></li>
+        <li class="bstep" data-step="planning"><span class="bstep-num">3</span><span class="bstep-label">Créneau</span></li>
+        <li class="bstep" data-step="contact"><span class="bstep-num">4</span><span class="bstep-label">Coordonnées</span></li>
+        <li class="bstep" data-step="recap"><span class="bstep-num">5</span><span class="bstep-label">Confirmation</span></li>
+      </ol>
+
+      <!-- PANEL: FORMAT -->
+      <div class="booking-panel is-active" data-panel="format">
+        <h3>Quel format souhaitez-vous réserver ?</h3>
+        <div class="option-grid" id="format-options">
+          <button type="button" class="option-card" data-format="individuel">
+            <span class="oc-name">Suivi individuel</span>
+            <span class="oc-duration">En visio — dès 50&nbsp;€</span>
+          </button>
+          <button type="button" class="option-card" data-format="groupe-prive">
+            <span class="oc-name">Atelier privé à domicile</span>
+            <span class="oc-duration">Minimum 6 personnes</span>
+          </button>
+          <button type="button" class="option-card" data-format="groupe-ouvert">
+            <span class="oc-name">Séance de groupe ouverte</span>
+            <span class="oc-duration">Créneaux réguliers, places limitées</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PANEL: DETAILS (contenu injecté selon le format) -->
+      <div class="booking-panel" data-panel="details">
+        <div id="details-content"></div>
+        <div class="booking-actions">
+          <button type="button" class="btn btn-ghost" data-back="format">Retour</button>
+          <button type="button" class="btn btn-primary" id="to-planning" disabled>Continuer</button>
+        </div>
+      </div>
+
+      <!-- PANEL: PLANNING (calendrier — individuel / groupe privé uniquement) -->
+      <div class="booking-panel" data-panel="planning">
+        <h3>Choisissez un créneau</h3>
+        <p class="booking-hint">Créneaux illustratifs — à connecter à un agenda réel.</p>
+        <div class="calendar-nav">
+          <button type="button" class="cal-nav-btn" id="cal-prev" aria-label="Mois précédent">‹</button>
+          <span class="cal-month-label" id="cal-month-label" aria-live="polite"></span>
+          <button type="button" class="cal-nav-btn" id="cal-next" aria-label="Mois suivant">›</button>
+        </div>
+        <div class="calendar-weekdays" id="calendar-weekdays"></div>
+        <div class="calendar" id="calendar"></div>
+        <div class="slots" id="slots" aria-live="polite"></div>
+        <div class="booking-actions">
+          <button type="button" class="btn btn-ghost" data-back="details">Retour</button>
+          <button type="button" class="btn btn-primary" id="to-contact" disabled>Continuer</button>
+        </div>
+      </div>
+
+      <!-- PANEL: CONTACT -->
+      <div class="booking-panel" data-panel="contact">
+        <h3>Vos coordonnées</h3>
+        <form id="booking-form" novalidate>
+          <div class="form-row">
+            <label for="f-prenom">Prénom
+              <input type="text" id="f-prenom" name="prenom" required>
+            </label>
+            <label for="f-nom">Nom
+              <input type="text" id="f-nom" name="nom" required>
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="f-email">Email
+              <input type="email" id="f-email" name="email" required>
+            </label>
+            <label for="f-tel">Téléphone
+              <input type="tel" id="f-tel" name="tel" required>
+            </label>
+          </div>
+          <label for="f-message">Message (facultatif)
+            <textarea id="f-message" name="message" rows="3" placeholder="Précisions utiles avant la séance…"></textarea>
+          </label>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" id="contact-back">Retour</button>
+            <button type="submit" class="btn btn-primary">Récapitulatif</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- PANEL: RECAP -->
+      <div class="booking-panel" data-panel="recap">
+        <div id="recap-view">
+          <h3>Vérifiez votre demande</h3>
+          <dl class="recap-list" id="recap-list"></dl>
+          <p class="booking-hint" id="recap-note"></p>
+          <p class="admin-error" id="recap-error" hidden></p>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back="contact">Modifier</button>
+            <button type="button" class="btn btn-primary" id="confirm-booking">Confirmer la demande</button>
+          </div>
+        </div>
+        <div id="success-view" hidden>
+          <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 20l6 6 10-12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Demande envoyée</h3>
+          <p id="success-text">Merci ! Votre créneau est réservé le temps que Marie-Laurence valide
+          votre demande. Vous recevrez un email sous 24h — s'il est confirmé,
+          il contiendra un lien de paiement sécurisé à régler pour finaliser
+          votre réservation.</p>
+          <button type="button" class="btn btn-outline" id="restart-booking">Faire une nouvelle demande</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <a href="index.html" class="brand brand-footer">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="28" height="28">
+            <path d="M4 22c4-10 8 10 12 0s8-10 12 0 8 10 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-text">Au fil de soi</span>
+      </a>
+      <p>Sophrologie caycédienne — Marie-Laurence Bonneau<br>Particuliers, entreprises &amp; collectivités, Grézet-Cavagnan (47)</p>
+    </div>
+
+    <div>
+      <h4>Contact</h4>
+      <p><a href="tel:+33600000000">06 00 00 00 00</a></p>
+      <p><a href="mailto:contact@aufildesoi.fr">contact@aufildesoi.fr</a></p>
+      <p>Grézet-Cavagnan, 47250</p>
+    </div>
+
+    <div>
+      <h4>Navigation</h4>
+      <p><a href="offres.html">Offres &amp; tarifs</a></p>
+      <p><a href="reservation.html">Réserver</a></p>
+      <p><a href="contact.html#devis">Demander un devis</a></p>
+    </div>
+
+    <div>
+      <h4>Informations</h4>
+      <p><a href="#">Mentions légales</a></p>
+      <p>SIRET : 000 000 000 00000</p>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Au fil de soi — Sophrologie. Maquette de démonstration.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/site.js"></script>
+<script src="js/reservation.js"></script>
+</body>
+</html>
