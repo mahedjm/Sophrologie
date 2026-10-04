@@ -11,7 +11,9 @@ dépendance, aucun framework — prête à être hébergée sur
 ```
 sophrologie-site/
 ├── index.html                  Accueil (piliers de l'offre)
-├── offres.html                 Offres & tarifs (5 formats détaillés)
+├── offres.html                 Particuliers, groupes & associations (tarifs + FAQ)
+├── entreprises.html            Sophrologie en entreprise / établissements de santé (+ FAQ)
+├── sophrologie-musique.html    Sophrologie & musique, la signature sonore (+ FAQ)
 ├── reservation.html            Réservation & paiement (tunnel à 3 formats)
 ├── a-propos.html                Qui suis-je
 ├── contact.html                 Coordonnées, zone d'intervention, FAQ, devis B2B
@@ -42,8 +44,12 @@ sophrologie-site/
 │       ├── stripe-webhook/           Marque le paiement reçu + email (.ics + lien d'annulation)
 │       ├── cancel-reservation/       Annulation en libre-service + remboursement automatique
 │       └── send-reminders/           Rappel email la veille de chaque séance payée (tâche planifiée)
+├── outils/seo.py              Régénère Open Graph + JSON-LD (FAQ, services) de chaque page
 └── README.md
 ```
+
+Après toute modification d'une FAQ ou d'une meta description, relancer
+`python3 outils/seo.py` pour garder les données structurées à jour.
 
 ## Déployer sur GitHub Pages (test rapide)
 
