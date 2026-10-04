@@ -5,7 +5,7 @@ SITE='https://sobiose.fr/'
 def url(p): return SITE if p=='index.html' else SITE+p
 PAGES=['index.html','offres.html','entreprises.html','sophrologie-musique.html','a-propos.html','contact.html','reservation.html']
 AREA=[{"@type":"City","name":n} for n in ["Marmande","Tonneins","Agen","Bordeaux"]]+[{"@type":"AdministrativeArea","name":"Lot-et-Garonne"},{"@type":"AdministrativeArea","name":"Gironde"},{"@type":"Country","name":"France"}]
-PERSON={"@type":"Person","@id":SITE+"#marie-laurence-bonneau","name":"Marie-Laurence Bonneau","url":SITE+"a-propos.html","worksFor":{"@id":SITE+"#cabinet"},
+PERSON={"@type":"Person","@id":SITE+"#marie-laurence-bonneau","name":"Marie-Laurence Bonneau","url":SITE+"a-propos.html","worksFor":{"@id":SITE+"#cabinet"},"image":SITE+"images/marie-laurence.jpg",
   "jobTitle":"Sophrologue certifiée RNCP niveau 5",
   "hasOccupation":[{"@type":"Occupation","name":"Sophrologue"},{"@type":"Occupation","name":"Aide-soignante"}],
   "alumniOf":{"@type":"EducationalOrganization","name":"ISSO Toulouse"},
@@ -42,7 +42,7 @@ for p in PAGES:
     graph=list(EXTRA[p]); f=faq(s)
     if f: graph.append(f)
     block='\n<!-- SEO:START -->\n'
-    block+=f'<link rel="canonical" href="{url(p)}">\n<meta property="og:url" content="{url(p)}">\n<meta property="og:site_name" content="SoBiOse">\n'
+    block+=f'<link rel="canonical" href="{url(p)}">\n<meta property="og:url" content="{url(p)}">\n<meta property="og:site_name" content="SoBiOse">\n<meta property="og:image" content="{SITE}images/marie-laurence.jpg">\n'
     block+=f'<meta property="og:type" content="website">\n<meta property="og:locale" content="fr_FR">\n<meta property="og:title" content="{html.escape(title)}">\n<meta property="og:description" content="{desc}">\n'
     if graph:
         block+='<script type="application/ld+json">\n'+json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False,indent=1)+'\n</script>\n'
