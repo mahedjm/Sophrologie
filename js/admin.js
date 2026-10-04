@@ -1,5 +1,5 @@
 /* =========================================================
-   AU FIL DE SOI — admin.js
+   SO-BIOSE — admin.js
    Page privée : connexion + gestion des demandes de rendez-vous.
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {

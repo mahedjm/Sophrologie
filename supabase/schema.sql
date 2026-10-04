@@ -1,5 +1,5 @@
 -- =========================================================
--- AU FIL DE SOI — Schéma Supabase
+-- SO-BIOSE — Schéma Supabase
 -- À exécuter dans : Dashboard Supabase > SQL Editor > New query
 -- =========================================================
 
