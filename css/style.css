@@ -653,3 +653,17 @@ img, svg { display: block; max-width: 100%; }
   .testi-track .testi-card { flex-basis: 100%; padding: 1.3rem 1.25rem; }
   .testi-card p { font-size: .98rem; margin-bottom: .7em; }
 }
+
+/* Mobile : aller à l'essentiel. Le texte reste dans la page (lu par Google),
+   seuls les compléments secondaires sont masqués à l'écran. */
+@media (max-width: 620px) {
+  /* Cartes courtes (« Stress », « Sommeil »…) : le titre suffit */
+  .cards-grid:not(.pillars-grid):not(.cards-grid-long) .p-card p { display: none; }
+  .cards-grid:not(.pillars-grid):not(.cards-grid-long) .p-card h3 { margin: 0; }
+  .section-lead { margin-bottom: 1.6rem; }
+  .section { padding: 2.6rem 0; }
+  .faq-list { margin-top: 1.4rem; gap: .5rem; }
+  .cards-grid, .format-grid, .testi-carousel { margin-top: 1.6rem; }
+  .format-card { padding: 1.4rem 1.3rem; }
+  .format-card dt { margin-top: .7rem; }
+}
