@@ -1,4 +1,4 @@
-# So-biose — Site de sophrologie (so-biose.fr)
+# SoBiOse — Site de sophrologie (sobiose.fr)
 
 Maquette statique HTML / CSS / JS pour une sophrologue exerçant en suivi
 individuel, ateliers privés à domicile, séances de groupe ouvertes, et
@@ -156,7 +156,7 @@ par les vraies valeurs récupérées à l'étape précédente.
 ### 3. Créer un compte Resend (envoi d'emails)
 - Créer un compte sur [resend.com](https://resend.com) (gratuit, 3000 emails/mois).
 - Récupérer une clé API.
-- Pour utiliser une adresse `contact@so-biose.fr`, il faut vérifier le nom
+- Pour utiliser une adresse `contact@sobiose.fr`, il faut vérifier le nom
   de domaine dans Resend (ajout d'enregistrements DNS). En attendant, on
   peut envoyer depuis l'adresse de test `onboarding@resend.dev`.
 

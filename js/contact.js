@@ -1,5 +1,5 @@
 /* =========================================================
-   SO-BIOSE — contact.js
+   SOBIOSE — contact.js
    Page contact.html : formulaire de demande de devis B2B, inséré
    directement dans la table `demandes_devis` (voir schema.sql). La
    cliente reçoit un email de notification (Edge Function

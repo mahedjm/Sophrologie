@@ -1,5 +1,5 @@
 /* =========================================================
-   SO-BIOSE — admin.js
+   SOBIOSE — admin.js
    Page privée : connexion + gestion des demandes de rendez-vous.
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {

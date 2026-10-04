@@ -1,5 +1,5 @@
 -- =========================================================
--- SO-BIOSE — Schéma Supabase
+-- SOBIOSE — Schéma Supabase
 -- À exécuter dans : Dashboard Supabase > SQL Editor > New query
 -- =========================================================
 

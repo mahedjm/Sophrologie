@@ -1,7 +1,7 @@
 # Injecte les balises Open Graph + données structurées JSON-LD (schema.org)
 # dans chaque page publique. Idempotent : le bloc SEO est remplacé à chaque run.
 import re, json, html
-SITE='https://so-biose.fr/'
+SITE='https://sobiose.fr/'
 def url(p): return SITE if p=='index.html' else SITE+p
 PAGES=['index.html','offres.html','entreprises.html','sophrologie-musique.html','a-propos.html','contact.html','reservation.html']
 AREA=[{"@type":"City","name":n} for n in ["Marmande","Tonneins","Agen","Bordeaux"]]+[{"@type":"AdministrativeArea","name":"Lot-et-Garonne"},{"@type":"AdministrativeArea","name":"Gironde"},{"@type":"Country","name":"France"}]
@@ -12,7 +12,7 @@ PERSON={"@type":"Person","@id":SITE+"#marie-laurence-bonneau","name":"Marie-Laur
   "hasCredential":{"@type":"EducationalOccupationalCredential","name":"Certification de sophrologue inscrite au RNCP (niveau 5)","credentialCategory":"Certification professionnelle"},
   "knowsAbout":["Sophrologie","Relaxation","Gestion du stress","Qualité de vie et des conditions de travail","Prévention des risques psychosociaux","Sommeil","Création sonore"],
   "sameAs":["https://www.youtube.com/@marie-c9j7u"]}
-BUSINESS={"@type":"ProfessionalService","@id":SITE+"#cabinet","name":"So-biose","alternateName":"So-biose — Marie-Laurence Bonneau, sophrologie & relaxation","url":SITE,
+BUSINESS={"@type":"ProfessionalService","@id":SITE+"#cabinet","name":"SoBiOse","alternateName":"SoBiOse — Marie-Laurence Bonneau, sophrologie & relaxation","url":SITE,
   "sameAs":["https://www.youtube.com/@marie-c9j7u"],
   "description":"Sophrologie et relaxation en visio pour adultes et adolescents dès 15 ans, ateliers de groupe dans le Marmandais, interventions en entreprise et séances de sophrologie musicale.",
   "address":{"@type":"PostalAddress","addressLocality":"Grézet-Cavagnan","postalCode":"47250","addressRegion":"Nouvelle-Aquitaine","addressCountry":"FR"},
@@ -42,7 +42,7 @@ for p in PAGES:
     graph=list(EXTRA[p]); f=faq(s)
     if f: graph.append(f)
     block='\n<!-- SEO:START -->\n'
-    block+=f'<link rel="canonical" href="{url(p)}">\n<meta property="og:url" content="{url(p)}">\n<meta property="og:site_name" content="So-biose">\n'
+    block+=f'<link rel="canonical" href="{url(p)}">\n<meta property="og:url" content="{url(p)}">\n<meta property="og:site_name" content="SoBiOse">\n'
     block+=f'<meta property="og:type" content="website">\n<meta property="og:locale" content="fr_FR">\n<meta property="og:title" content="{html.escape(title)}">\n<meta property="og:description" content="{desc}">\n'
     if graph:
         block+='<script type="application/ld+json">\n'+json.dumps({"@context":"https://schema.org","@graph":graph},ensure_ascii=False,indent=1)+'\n</script>\n'

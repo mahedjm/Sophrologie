@@ -1,5 +1,5 @@
 /* =========================================================
-   SO-BIOSE — annulation.js
+   SOBIOSE — annulation.js
    Page annulation.html : affiche le montant remboursé (calculé
    côté serveur selon la règle des 24h) et déclenche l'annulation
    + le remboursement Stripe sur confirmation du client.

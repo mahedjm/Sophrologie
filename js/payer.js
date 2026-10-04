@@ -1,5 +1,5 @@
 /* =========================================================
-   SO-BIOSE — payer.js
+   SOBIOSE — payer.js
    Page payer.html : crée une session Stripe Checkout à la volée
    pour la réservation désignée par le token présent dans l'URL,
    puis redirige vers le paiement sécurisé.
