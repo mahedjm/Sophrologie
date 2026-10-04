@@ -595,3 +595,4 @@ img, svg { display: block; max-width: 100%; }
 .zone-info { flex-wrap: wrap; gap: 1.4rem 2rem; }
 .faq-item p a { color: var(--color-plum); }
 .map-label-far { font-style: italic; fill: var(--color-plum); font-size: 11px; }
+.hero-text a { color: var(--color-plum); }

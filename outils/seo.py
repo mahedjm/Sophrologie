@@ -8,7 +8,8 @@ PERSON={"@type":"Person","@id":"#marie-laurence-bonneau","name":"Marie-Laurence 
   "hasOccupation":[{"@type":"Occupation","name":"Sophrologue"},{"@type":"Occupation","name":"Aide-soignante"}],
   "alumniOf":{"@type":"EducationalOrganization","name":"ISSO Toulouse"},
   "hasCredential":{"@type":"EducationalOccupationalCredential","name":"Certification de sophrologue inscrite au RNCP (niveau 5)","credentialCategory":"Certification professionnelle"},
-  "knowsAbout":["Sophrologie","Relaxation","Gestion du stress","Qualité de vie et des conditions de travail","Prévention des risques psychosociaux","Sommeil","Création sonore"]}
+  "knowsAbout":["Sophrologie","Relaxation","Gestion du stress","Qualité de vie et des conditions de travail","Prévention des risques psychosociaux","Sommeil","Création sonore"],
+  "sameAs":["https://www.youtube.com/@marie-c9j7u"]}
 BUSINESS={"@type":"ProfessionalService","@id":"#cabinet","name":"Marie-Laurence Bonneau — Sophrologie & relaxation",
   "description":"Sophrologie et relaxation en visio pour adultes et adolescents dès 15 ans, ateliers de groupe dans le Marmandais, interventions en entreprise et séances de sophrologie musicale.",
   "address":{"@type":"PostalAddress","addressLocality":"Grézet-Cavagnan","postalCode":"47250","addressRegion":"Nouvelle-Aquitaine","addressCountry":"FR"},
