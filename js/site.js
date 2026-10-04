@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     navToggle.setAttribute('aria-expanded', 'false');
   }));
 
+  /* ---------- Bio : repliée par défaut sur mobile ---------- */
+  if (window.matchMedia('(max-width: 620px)').matches) {
+    document.querySelectorAll('.about-more[open]').forEach(d => d.removeAttribute('open'));
+  }
+
   /* ---------- Avis : défilement carte par carte ---------- */
   document.querySelectorAll('.testi-carousel').forEach(carousel => {
     const track = carousel.querySelector('.testi-track');
