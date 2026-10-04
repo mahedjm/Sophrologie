@@ -1,5 +1,5 @@
 /* =========================================================
-   AU FIL DE SOI — site.js
+   SOBIOSE — site.js
    Comportements communs à toutes les pages (header, nav mobile,
    animations au scroll). Ne dépend pas de Supabase — chargé partout.
    ========================================================= */

@@ -1,5 +1,5 @@
 /* =========================================================
-   AU FIL DE SOI — reservation.js
+   SOBIOSE — reservation.js
    Page reservation.html : tunnel de réservation à 3 formats —
    suivi individuel, atelier privé à domicile, séance de groupe
    ouverte — connecté à Supabase.
