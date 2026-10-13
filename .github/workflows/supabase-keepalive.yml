@@ -1,0 +1,19 @@
+name: Supabase keep-alive
+
+# Le plan gratuit Supabase met le projet en pause après 7 jours sans activité.
+# Jours 1, 7, 13, 19, 25 et 31 de chaque mois : jamais plus de 6 jours d'écart.
+on:
+  schedule:
+    - cron: '17 6 */6 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lecture d'une table publique
+        # Clé "publishable" déjà publique (js/config.js). Échoue si le projet ne répond pas.
+        run: |
+          curl --fail --silent --show-error --max-time 30 --retry 3 --retry-delay 20 \
+            "https://jtvztegdisffntldrkqc.supabase.co/rest/v1/creneaux_pris?select=*&limit=1" \
+            -H "apikey: sb_publishable_S_HgrBMSBe51eShESnDuXw_EVwKgO_h"
