@@ -14,7 +14,7 @@
 }
 
 .admin-login { max-width: 420px; margin: 3rem auto; }
-.admin-login form label { display: block; font-size: .86rem; font-weight: 600; color: var(--color-river-2); margin-bottom: 1.1rem; }
+.admin-login form label { display: block; font-size: .86rem; font-weight: 600; color: var(--color-slate-2); margin-bottom: 1.1rem; }
 .admin-login form input {
   display: block; width: 100%; margin-top: .4rem; padding: .8em .9em;
   border-radius: var(--radius-sm); border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: .95rem;
@@ -32,7 +32,7 @@
   background: var(--color-card); border: 1px solid var(--color-line); border-radius: var(--radius-md);
   padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; gap: 1.2rem; align-items: flex-start; flex-wrap: wrap;
 }
-.req-main strong { display: block; font-family: var(--font-display); font-size: 1.05rem; color: var(--color-river-2); }
+.req-main strong { display: block; font-family: var(--font-display); font-size: 1.05rem; color: var(--color-slate-2); }
 .req-main span { display: block; font-size: .86rem; color: var(--color-ink-soft); margin-top: .15rem; }
 .req-main .req-meta { font-family: var(--font-mono); font-size: .78rem; margin-top: .5rem; }
 
@@ -50,10 +50,10 @@
 
 .admin-atelier-form { margin: 1.6rem 0; padding: 1.8rem; }
 .admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-.admin-atelier-form label { display: block; font-size: .86rem; font-weight: 600; color: var(--color-river-2); margin-bottom: 1.1rem; }
+.admin-atelier-form label { display: block; font-size: .86rem; font-weight: 600; color: var(--color-slate-2); margin-bottom: 1.1rem; }
 .admin-atelier-form input {
   display: block; width: 100%; margin-top: .4rem; padding: .7em .9em;
   border-radius: var(--radius-sm); border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: .95rem;
 }
 
-.atelier-card .req-status.is-complet { background: #E8D8D2; color: #7C4A5C; }
+.atelier-card .req-status.is-complet { background: #F3DFD5; color: var(--color-terra-deep); }

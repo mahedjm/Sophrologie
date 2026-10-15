@@ -419,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      (window.dataLayer = window.dataLayer || []).push({ event: 'begin_checkout', lead_type: 'seance-ouverte' });
       window.location.href = sessionData.url;
       return;
     }
@@ -464,6 +465,8 @@ document.addEventListener('DOMContentLoaded', () => {
       + 'de paiement sécurisé à régler pour finaliser votre réservation.';
     recapView.hidden = true;
     successView.hidden = false;
+    // Conversion pour Google Tag Manager (sans donnée personnelle ; n'est envoyée qu'après consentement)
+    (window.dataLayer = window.dataLayer || []).push({ event: 'generate_lead', lead_type: 'reservation', prestation: state.service || state.format });
   });
 
   restartBtn.addEventListener('click', () => {
