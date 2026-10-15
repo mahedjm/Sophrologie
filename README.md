@@ -79,6 +79,11 @@ Tout est signalé par un commentaire `<!-- ... -->` en haut d'`index.html`, en r
   domicile à partir de 25 €/personne)
 - Zone d'intervention (villes autour de Marmande)
 - Avis clients (actuellement fictifs)
+- Mesure d'audience : coller l'identifiant Google Tag Manager (`GTM-XXXXXXX`)
+  dans `GTM_ID` (bloc « Mesure d'audience » de `js/site.js`). Le bandeau de
+  consentement s'affiche alors tout seul ; GTM n'est chargé qu'après
+  « Accepter » (exigence CNIL), et un lien « Cookies » apparaît en pied de page.
+  Les demandes de devis et de réservation envoient l'événement `generate_lead`.
 - Le monogramme SVG "ML" en section "Qui suis-je" → à remplacer par une vraie photo
 
 ## Réservation, ateliers et paiement : architecture

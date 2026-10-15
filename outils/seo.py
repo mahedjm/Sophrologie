@@ -4,7 +4,7 @@ import re, json, html
 SITE='https://sobiose.fr/'
 def url(p): return SITE if p=='index.html' else SITE+p
 PAGES=['index.html','offres.html','entreprises.html','sophrologie-musique.html','a-propos.html','contact.html','reservation.html']
-AREA=[{"@type":"City","name":n} for n in ["Marmande","Tonneins","Agen","Bordeaux"]]+[{"@type":"AdministrativeArea","name":"Lot-et-Garonne"},{"@type":"AdministrativeArea","name":"Gironde"},{"@type":"Country","name":"France"}]
+AREA=[{"@type":"City","name":n} for n in ["Marmande","Tonneins","Agen","Bordeaux","Toulouse"]]+[{"@type":"AdministrativeArea","name":n} for n in ["Lot-et-Garonne","Gironde","Haute-Garonne"]]+[{"@type":"Country","name":"France"}]
 PERSON={"@type":"Person","@id":SITE+"#marie-laurence-bonneau","name":"Marie-Laurence Bonneau","url":SITE+"a-propos.html","worksFor":{"@id":SITE+"#cabinet"},"image":SITE+"images/marie-laurence.jpg",
   "jobTitle":"Sophrologue certifiée RNCP niveau 5",
   "hasOccupation":[{"@type":"Occupation","name":"Sophrologue"},{"@type":"Occupation","name":"Aide-soignante"}],
@@ -23,8 +23,8 @@ def service(name,desc,stype,audience):
 EXTRA={
  'index.html':[BUSINESS,PERSON],
  'a-propos.html':[PERSON,BUSINESS],
- 'entreprises.html':[BUSINESS,service("Sophrologie en entreprise","Ateliers QVCT de 1h à 2h, parcours de 4 à 8 séances et accompagnement individuel des managers et dirigeants, sur site ou en visio.","Sophrologie et relaxation en entreprise","Entreprises, établissements de santé, managers et salariés")],
- 'sophrologie-musique.html':[BUSINESS,service("Sophrologie et musique","Séances de sophrologie et relaxation sur compositions originales ou co-animées avec des musiciens, pour groupes, collectivités, associations et événements culturels.","Sophrologie musicale","Mairies, associations, lieux culturels, groupes")],
+ 'entreprises.html':[BUSINESS,service("Sophrologie en entreprise","Séances collectives, cycles de 10 séances, ateliers thématiques et demi-journées QVCT pour les équipes ; groupes restreints et accompagnement individuel pour les dirigeants. Sur site ou en visio, tarifs indicatifs dès 150 € HT.","Sophrologie et relaxation en entreprise","Entreprises, établissements de santé, managers et salariés")],
+ 'sophrologie-musique.html':[BUSINESS,service("Sophro-sonore (sophrologie et musique)","Séances de sophrologie et relaxation sur compositions originales ou co-animées avec des musiciens, pour groupes, collectivités, associations et événements culturels.","Sophrologie musicale","Mairies, associations, lieux culturels, groupes")],
  'offres.html':[BUSINESS,service("Séances de sophrologie en visio","Séances individuelles de sophrologie et relaxation en visio pour adultes et adolescents dès 15 ans : stress, sommeil, confiance en soi, examens.","Sophrologie individuelle","Adultes et adolescents dès 15 ans")],
  'contact.html':[BUSINESS],
  'reservation.html':[],
@@ -36,7 +36,7 @@ def faq(s):
     return {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":clean(q),"acceptedAnswer":{"@type":"Answer","text":clean(a)}} for q,a in items]} if items else None
 for p in PAGES:
     s=open(p).read()
-    s=re.sub(r'\n<!-- SEO:START -->.*?<!-- SEO:END -->','',s,flags=re.S)
+    s=re.sub(r'\n+<!-- SEO:START -->.*?<!-- SEO:END -->\n','',s,flags=re.S)
     title=html.unescape(re.search(r'<title>(.*?)</title>',s).group(1))
     desc=re.search(r'<meta name="description" content="(.*?)">',s).group(1)
     graph=list(EXTRA[p]); f=faq(s)

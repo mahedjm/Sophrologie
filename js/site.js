@@ -90,4 +90,72 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => el.classList.add('is-visible'));
   }
 
+  /* ---------- Mesure d'audience : Google Tag Manager, après consentement ---------- */
+  // Identifiant du conteneur (GTM-XXXXXXX). Vide = rien n'est chargé, aucun bandeau.
+  const GTM_ID = '';
+  const CONSENT_KEY = 'sobiose-consent';
+  const CONSENT_TTL = 182 * 24 * 3600 * 1000; // choix conservé 6 mois (recommandation CNIL)
+
+  function readConsent() {
+    try {
+      const c = JSON.parse(localStorage.getItem(CONSENT_KEY));
+      return c && Date.now() - c.t < CONSENT_TTL ? c.v : null;
+    } catch (e) { return null; }
+  }
+
+  function loadGTM() {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    // Seule la mesure d'audience a été acceptée : aucune finalité publicitaire
+    gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+    window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+    document.head.appendChild(s);
+  }
+
+  function askConsent() {
+    if (document.querySelector('.consent')) return;
+    const box = document.createElement('div');
+    box.className = 'consent';
+    box.setAttribute('role', 'region');
+    box.setAttribute('aria-label', 'Cookies de mesure d\'audience');
+    box.innerHTML = '<p>Puis-je mesurer la fréquentation du site avec Google Analytics ? Ces cookies ne sont déposés qu\'avec votre accord ; vous pourrez changer d\'avis via « Cookies » en bas de page.</p>'
+      + '<div class="consent-actions"><button type="button" class="btn btn-outline btn-small" data-choice="denied">Refuser</button>'
+      + '<button type="button" class="btn btn-outline btn-small" data-choice="granted">Accepter</button></div>';
+    box.addEventListener('click', e => {
+      const choice = e.target.dataset.choice;
+      if (!choice) return;
+      const previous = readConsent();
+      try { localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: choice, t: Date.now() })); } catch (err) { /* navigation privée : on redemandera */ }
+      box.remove();
+      if (choice === 'granted' && previous !== 'granted') loadGTM();
+      if (choice === 'denied' && previous === 'granted') {
+        // Retrait du consentement : on efface les cookies Analytics et on recharge sans GTM
+        const domain = location.hostname.replace(/^www\./, '');
+        document.cookie.split(';').map(c => c.split('=')[0].trim()).filter(n => n.startsWith('_ga')).forEach(n => {
+          document.cookie = n + '=; Max-Age=0; path=/';
+          document.cookie = n + '=; Max-Age=0; path=/; domain=.' + domain;
+        });
+        location.reload();
+      }
+    });
+    document.body.prepend(box);
+  }
+
+  if (GTM_ID) {
+    const choice = readConsent();
+    if (choice === 'granted') loadGTM();
+    if (choice === null) askConsent();
+    // Lien permanent pour revenir sur son choix (exigence CNIL)
+    const info = document.querySelector('.site-footer .footer-inner > div:last-child');
+    if (info) {
+      const p = document.createElement('p');
+      p.innerHTML = '<button type="button" class="link-btn">Cookies</button>';
+      p.firstChild.addEventListener('click', askConsent);
+      info.appendChild(p);
+    }
+  }
+
 });

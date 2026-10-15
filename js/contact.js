@@ -17,15 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Préselection de l'objet via ?objet=entreprise|musique|collectivite
   const OBJET_LABELS = {
     entreprise: 'Intervention en entreprise / établissement de santé',
-    musique: 'Sophrologie & musique',
+    musique: 'Sophro-sonore',
     collectivite: 'Atelier ou cycle collectivité / association',
     autre: 'Autre demande',
   };
-  const objetParam = new URLSearchParams(window.location.search).get('objet');
+  const params = new URLSearchParams(window.location.search);
+  const objetParam = params.get('objet');
   if (objetParam && OBJET_LABELS[objetParam]) {
     form.objet.value = objetParam;
     if (objetParam === 'entreprise') form.type_structure.value = 'entreprise';
   }
+  // Format choisi sur une carte tarif (entreprises.html) : repris dans le message
+  const formatParam = params.get('format');
+  if (formatParam) form.message.value = `Format envisagé : ${formatParam}\n`;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -60,6 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.hidden = true;
     successEl.hidden = false;
+    // Conversion pour Google Tag Manager (sans donnée personnelle ; n'est envoyée qu'après consentement)
+    (window.dataLayer = window.dataLayer || []).push({ event: 'generate_lead', lead_type: 'devis', objet: form.objet.value });
   });
 
 });
