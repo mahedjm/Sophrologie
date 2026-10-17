@@ -268,6 +268,22 @@ img, svg { display: block; max-width: 100%; }
   background: var(--color-bg); border: 1px solid var(--color-line); border-radius: 999px; padding: .35em .85em;
 }
 
+/* Liste à puces dans une carte (ex. page ménopause) */
+.card-list { list-style: none; padding: 0; margin: .6rem 0 0; }
+.card-list li { font-size: .92rem; padding-left: 1.2em; position: relative; margin-bottom: .5em; color: var(--color-ink-soft); }
+.card-list li::before { content: "—"; position: absolute; left: 0; color: var(--color-sage); }
+.offer-banner a { color: var(--color-clay); font-weight: 600; }
+
+/* Encart spécialisé (accueil) */
+.spotlight {
+  display: block; max-width: 760px; margin: 2.4rem auto 0; padding: 2rem 2.2rem; text-align: center; text-decoration: none;
+  background: var(--color-card); border: 1px solid var(--color-line); border-left: 4px solid var(--color-terra);
+  border-radius: var(--radius-md); transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.spotlight:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); }
+.spotlight .eyebrow { margin-bottom: .6rem; }
+.spotlight-text { font-family: var(--font-display); font-size: 1.2rem; color: var(--color-slate-2); margin: 0 0 .4rem; }
+
 /* =========================================================
    SOBIOSE — le sens du nom (accueil + à propos)
    ========================================================= */
@@ -750,6 +766,7 @@ img, svg { display: block; max-width: 100%; }
   .pillars-grid .pillar-link { grid-column: 1 / -1; }
   .pillars-grid .p-card p, .cards-grid-long .p-card p { font-size: .9rem; margin-top: .6rem; }
   .pillars-grid .pillar-link { margin-top: .2rem; }
+  .pillars-grid .card-list { grid-column: 1 / -1; margin-top: .8rem; }
 
   /* Avis : un avis par écran, plus compact */
   .testi-track { gap: .9rem; }
@@ -764,6 +781,8 @@ img, svg { display: block; max-width: 100%; }
   .cards-grid:not(.pillars-grid):not(.cards-grid-long) .p-card:not(.p-card-wide) p { display: none; }
   .cards-grid:not(.pillars-grid):not(.cards-grid-long) .p-card:not(.p-card-wide) h3 { margin: 0; }
   .p-card-wide p { font-size: .86rem; }
+  .spotlight { margin-top: 1.6rem; padding: 1.4rem 1.25rem; }
+  .spotlight-text { font-size: 1.05rem; }
   .card-tags { justify-content: center; margin-top: .8rem; gap: .35rem; }
   .card-tags li { font-size: .7rem; padding: .3em .7em; }
 

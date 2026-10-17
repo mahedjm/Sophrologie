@@ -3,7 +3,7 @@
 import re, json, html
 SITE='https://sobiose.fr/'
 def url(p): return SITE if p=='index.html' else SITE+p
-PAGES=['index.html','offres.html','entreprises.html','sophrologie-musique.html','a-propos.html','contact.html','reservation.html']
+PAGES=['index.html','offres.html','entreprises.html','sophrologie-musique.html','menopause.html','a-propos.html','contact.html','reservation.html']
 AREA=[{"@type":"City","name":n} for n in ["Marmande","Tonneins","Agen","Bordeaux","Toulouse"]]+[{"@type":"AdministrativeArea","name":n} for n in ["Lot-et-Garonne","Gironde","Haute-Garonne"]]+[{"@type":"Country","name":"France"}]
 PERSON={"@type":"Person","@id":SITE+"#marie-laurence-bonneau","name":"Marie-Laurence Bonneau","url":SITE+"a-propos.html","worksFor":{"@id":SITE+"#cabinet"},"image":SITE+"images/marie-laurence.jpg",
   "jobTitle":"Sophrologue certifiée RNCP niveau 5",
@@ -23,13 +23,14 @@ def service(name,desc,stype,audience):
 EXTRA={
  'index.html':[BUSINESS,PERSON],
  'a-propos.html':[PERSON,BUSINESS],
- 'entreprises.html':[BUSINESS,service("Sophrologie en entreprise","Séances collectives, cycles de 10 séances, ateliers thématiques et demi-journées QVCT pour les équipes ; groupes restreints et accompagnement individuel pour les dirigeants. Sur site ou en visio, tarifs indicatifs dès 150 € HT.","Sophrologie et relaxation en entreprise","Entreprises, établissements de santé, managers et salariés")],
+ 'entreprises.html':[BUSINESS,service("Sophrologie en entreprise","Séances collectives, cycles de 10 séances, ateliers thématiques et demi-journées QVCT pour les équipes ; groupes restreints et accompagnement individuel pour les dirigeants. Sur site ou en visio, tarifs indicatifs dès 150 € net.","Sophrologie et relaxation en entreprise","Entreprises, établissements de santé, managers et salariés")],
  'sophrologie-musique.html':[BUSINESS,service("Sophro-sonore (sophrologie et musique)","Séances de sophrologie et relaxation sur compositions originales ou co-animées avec des musiciens, pour groupes, collectivités, associations et événements culturels.","Sophrologie musicale","Mairies, associations, lieux culturels, groupes")],
  'offres.html':[BUSINESS,service("Séances de sophrologie en visio","Séances individuelles de sophrologie et relaxation en visio pour adultes et adolescents dès 15 ans : stress, sommeil, confiance en soi, examens.","Sophrologie individuelle","Adultes et adolescents dès 15 ans")],
+ 'menopause.html':[BUSINESS,service("Sophrologie péri-ménopause et ménopause","Accompagnement sophrologique de la péri-ménopause et de la ménopause : bouffées de chaleur, sommeil, variations d'humeur, charge mentale, estime de soi. En complément du suivi médical.","Sophrologie et santé de la femme","Femmes en péri-ménopause ou ménopausées")],
  'contact.html':[BUSINESS],
  'reservation.html':[],
 }
-SITEMAP_PRIORITY={'index.html':'1.0','offres.html':'0.9','entreprises.html':'0.9','sophrologie-musique.html':'0.8','a-propos.html':'0.7','contact.html':'0.7','reservation.html':'0.6'}
+SITEMAP_PRIORITY={'index.html':'1.0','offres.html':'0.9','entreprises.html':'0.9','sophrologie-musique.html':'0.8','menopause.html':'0.8','a-propos.html':'0.7','contact.html':'0.7','reservation.html':'0.6'}
 def faq(s):
     items=re.findall(r'<details class="faq-item">\s*<summary>(.*?)</summary>\s*<p>(.*?)</p>',s,flags=re.S)
     clean=lambda t: html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',t))).strip()

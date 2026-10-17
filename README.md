@@ -14,6 +14,7 @@ sophrologie-site/
 ├── offres.html                 Particuliers, groupes & associations (tarifs + FAQ)
 ├── entreprises.html            Sophrologie en entreprise / établissements de santé (+ FAQ)
 ├── sophrologie-musique.html    Sophrologie & musique, la signature sonore (+ FAQ)
+├── menopause.html              Accompagnement péri-ménopause & ménopause
 ├── reservation.html            Réservation & paiement (tunnel à 3 formats)
 ├── a-propos.html                Qui suis-je
 ├── contact.html                 Coordonnées, zone d'intervention, FAQ, devis B2B
