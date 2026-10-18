@@ -10,11 +10,13 @@ dépendance, aucun framework — prête à être hébergée sur
 
 ```
 sophrologie-site/
-├── index.html                  Accueil (piliers de l'offre)
+├── index.html                  Accueil immersif (univers en fleur, zoom / dézoom) + piliers de l'offre
 ├── offres.html                 Particuliers, groupes & associations (tarifs + FAQ)
 ├── entreprises.html            Sophrologie en entreprise / établissements de santé (+ FAQ)
 ├── sophrologie-musique.html    Sophrologie & musique, la signature sonore (+ FAQ)
 ├── menopause.html              Accompagnement péri-ménopause & ménopause
+├── sport.html                  Sophro-relaxation appliquée au sport
+├── preparation-mentale.html    Préparation mentale (examens, concours, épreuves)
 ├── reservation.html            Réservation & paiement (tunnel à 3 formats)
 ├── a-propos.html                Qui suis-je
 ├── contact.html                 Coordonnées, zone d'intervention, FAQ, devis B2B

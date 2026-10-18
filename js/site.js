@@ -74,6 +74,75 @@ document.addEventListener('DOMContentLoaded', () => {
     start();
   });
 
+  /* ---------- Accueil immersif : zoom vers un univers, dézoom au retour ---------- */
+  const universe = document.querySelector('.hero-universe');
+  if (universe) {
+    const stage = universe.querySelector('.u-stage');
+    const asTiles = window.matchMedia('(max-width: 620px)');
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let veil = null, safety = null;
+
+    // La bulle (ou la tuile sur mobile) grandit jusqu'à couvrir l'écran, puis la page du thème s'ouvre
+    function zoomIn(link) {
+      const orb = link.querySelector('.u-orb');
+      const r = orb.getBoundingClientRect();
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      let from, to;
+      if (asTiles.matches) {
+        const round = getComputedStyle(orb).borderTopLeftRadius;
+        from = `inset(${r.top}px ${vw - r.right}px ${vh - r.bottom}px ${r.left}px round ${round})`;
+        to = 'inset(0px 0px 0px 0px round 0px)';
+      } else {
+        const far = Math.hypot(Math.max(cx, vw - cx), Math.max(cy, vh - cy));
+        from = `circle(${r.width / 2}px at ${cx}px ${cy}px)`;
+        to = `circle(${far}px at ${cx}px ${cy}px)`;
+        const box = stage.getBoundingClientRect();
+        stage.style.setProperty('--ox', `${cx - box.left}px`);
+        stage.style.setProperty('--oy', `${cy - box.top}px`);
+      }
+
+      veil = document.createElement('div');
+      veil.className = 'u-veil u-' + link.dataset.u;
+      veil.dataset.from = from;
+      veil.style.clipPath = from;
+      document.body.appendChild(veil);
+      veil.getBoundingClientRect(); // applique la forme de départ avant la transition
+      veil.style.clipPath = to;
+      link.classList.add('is-target');
+      universe.classList.add('is-entering');
+
+      setTimeout(() => {
+        try { sessionStorage.setItem('sb-zoom', JSON.stringify({ k: link.dataset.u, t: Date.now() })); } catch (e) { /* navigation privée : arrivée sans voile */ }
+        window.location.href = link.href;
+      }, 700);
+      // Si la page ne s'ouvre pas (hors connexion…), on ne laisse pas l'écran couvert
+      safety = setTimeout(zoomOut, 8000);
+    }
+
+    function zoomOut() {
+      clearTimeout(safety);
+      universe.classList.remove('is-entering');
+      universe.querySelectorAll('.is-target').forEach(el => el.classList.remove('is-target'));
+      if (!veil) return;
+      const v = veil;
+      veil = null;
+      v.style.clipPath = v.dataset.from;
+      v.classList.add('is-leaving');
+      setTimeout(() => v.remove(), 900);
+    }
+
+    universe.querySelectorAll('.u-bubble').forEach(link => link.addEventListener('click', e => {
+      // Ctrl/Cmd-clic (nouvel onglet), animations réduites ou zoom déjà lancé : lien normal
+      if (calm.matches || veil || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      zoomIn(link);
+    }));
+
+    // Retour avec « Précédent » : la page revient du cache avec le voile déployé, on dézoome
+    window.addEventListener('pageshow', e => { if (e.persisted) zoomOut(); });
+  }
+
   /* ---------- Scroll reveal ---------- */
   const revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {

@@ -208,6 +208,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script>
+/* Arrivée depuis l'accueil (effet zoom) : voile de la couleur de l'univers, posé avant le premier affichage */
+(function () { try { var z = JSON.parse(sessionStorage.getItem('sb-zoom')); sessionStorage.removeItem('sb-zoom'); if (z && /^[a-z]+$/.test(z.k) && Date.now() - z.t < 4000) document.documentElement.setAttribute('data-zoom', z.k); } catch (e) {} })();
+</script>
 </head>
 <body>
 
@@ -618,6 +622,8 @@
       <p><a href="entreprises.html">Entreprises</a></p>
       <p><a href="sophrologie-musique.html">Sophro-sonore</a></p>
       <p><a href="menopause.html">Péri-ménopause &amp; ménopause</a></p>
+      <p><a href="sport.html">Sport</a></p>
+      <p><a href="preparation-mentale.html">Préparation mentale</a></p>
       <p><a href="reservation.html">Réserver</a></p>
     </div>
 
