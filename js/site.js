@@ -106,9 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
       veil.className = 'u-veil u-' + link.dataset.u;
       veil.dataset.from = from;
       veil.style.clipPath = from;
+      // Le pictogramme part de sa place dans la bulle et traverse l'écran
+      const pic = link.querySelector('.u-icon');
+      const p = pic.getBoundingClientRect();
+      const icon = pic.querySelector('svg').cloneNode(true);
+      icon.setAttribute('class', 'u-veil-icon');
+      icon.style.left = `${p.left + p.width / 2}px`;
+      icon.style.top = `${p.top + p.height / 2}px`;
+      veil.appendChild(icon);
       document.body.appendChild(veil);
       veil.getBoundingClientRect(); // applique la forme de départ avant la transition
       veil.style.clipPath = to;
+      veil.classList.add('is-open');
       link.classList.add('is-target');
       universe.classList.add('is-entering');
 
@@ -128,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const v = veil;
       veil = null;
       v.style.clipPath = v.dataset.from;
+      v.classList.remove('is-open');
       v.classList.add('is-leaving');
       setTimeout(() => v.remove(), 900);
     }
