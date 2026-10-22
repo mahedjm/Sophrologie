@@ -36,7 +36,8 @@ sophrologie-site/
 │   ├── payer.js                  Crée la session Stripe et redirige vers le paiement
 │   └── annulation.js             Aperçu + confirmation de l'annulation/remboursement
 ├── supabase/
-│   ├── schema.sql                Tables, jauge, sécurité, colonnes paiement
+│   ├── schema.sql                Tables, jauge, sécurité, colonnes paiement, agenda
+│   ├── disponibilites.sql        Ajout de l'agenda des disponibilités à un projet existant
 │   ├── config.toml               verify_jwt=false pour les fonctions publiques
 │   └── functions/
 │       ├── notify-new-request/       Email à la sophrologue (nouvelle demande)
@@ -101,7 +102,9 @@ choisi ensuite.
 Le tunnel de `reservation.html` propose 3 formats, avec des règles différentes :
 
 **1. Suivi individuel / atelier privé à domicile** (validation manuelle) :
-1. Un client réserve un créneau → une ligne `en_attente` est créée dans
+1. Un client réserve un créneau parmi ceux que la sophrologue a ouverts
+   dans `admin.html` (section « Mes disponibilités », table
+   `disponibilites`) → une ligne `en_attente` est créée dans
    `reservations`. La base empêche nativement deux réservations actives sur
    le même créneau (contrainte SQL, pas seulement une vérification JS).
 2. La sophrologue reçoit un email de notification (`notify-new-request`).
@@ -145,6 +148,9 @@ intervention manuelle de la sophrologue.
 ### 1. Créer le projet Supabase
 - Créer un compte sur [supabase.com](https://supabase.com) (gratuit) et un nouveau projet.
 - Dans **SQL Editor**, exécuter le contenu de `supabase/schema.sql`.
+  Projet déjà en place : exécuter seulement `supabase/disponibilites.sql`
+  pour activer l'agenda des disponibilités (sans lui, la page de réservation
+  propose les horaires fixes `BASE_SLOTS`).
 - Dans **Authentication → Users**, cliquer sur **Add user** et créer le
   compte de la sophrologue (email + mot de passe) — c'est ce compte qui se
   connectera sur `admin.html`. Ne pas activer l'inscription publique.
@@ -269,11 +275,12 @@ Une fois le compte Stripe activé en production, remplacer `sk_test_...` par
 la clé secrète live et refaire l'étape 7 avec l'endpoint de production.
 
 ## Limites actuelles / pistes d'amélioration
-- Les horaires proposés sont fixes (`BASE_SLOTS` dans `js/reservation.js`) —
-  pas encore de gestion d'horaires différents par jour de la semaine.
-- Les jours de fermeture ponctuels se gèrent à la main via `CLOSED_DATES`
-  dans `js/config.js` — une vraie table `exceptions` serait plus confortable
-  à terme.
+- Les séances individuelles et ateliers privés ne sont proposés que sur les
+  créneaux ouverts par la sophrologue (« Mes disponibilités » dans
+  `admin.html`, avec répétition hebdomadaire possible). Tant que
+  `supabase/disponibilites.sql` n'a pas été exécuté, le site revient aux
+  horaires fixes `BASE_SLOTS` (tous les jours sauf le dimanche, hors
+  `CLOSED_DATES` dans `js/config.js`).
 - Si un client ne va jamais au bout du paiement après confirmation (format
   individuel/atelier privé), le créneau reste bloqué : la sophrologue doit
   le libérer manuellement depuis `admin.html` (bouton "Libérer le créneau").

@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dashboardView.hidden = false;
     logoutBtn.hidden = false;
     loadRequests();
+    loadDispos();
     loadAteliers();
     loadDevis();
   }
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pending.forEach(r => pendingList.appendChild(renderRequestCard(r, true)));
     }
 
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localISO(new Date());
     const { data: upcoming, error: upcomingErr } = await supabaseClient
       .from('reservations')
       .select('*')
@@ -201,6 +202,146 @@ document.addEventListener('DOMContentLoaded', () => {
     loadRequests();
   }
 
+  /* ---------- Mes disponibilités (agenda des séances individuelles) ---------- */
+  const dispoForm = document.getElementById('dispo-form');
+  const dispoError = document.getElementById('dispo-error');
+  const dispoList = document.getElementById('dispo-list');
+  const dispoEmpty = document.getElementById('dispo-empty');
+
+  // Date locale 'YYYY-MM-DD' (toISOString passerait en UTC et décalerait d'un jour)
+  function localISO(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  document.getElementById('d-date').min = localISO(new Date());
+
+  async function loadDispos() {
+    dispoList.innerHTML = '';
+    dispoEmpty.hidden = true;
+    const today = localISO(new Date());
+
+    const [dispos, booked] = await Promise.all([
+      supabaseClient.from('disponibilites').select('id, date_seance, heure_seance')
+        .gte('date_seance', today)
+        .order('date_seance', { ascending: true })
+        .order('heure_seance', { ascending: true }),
+      supabaseClient.from('reservations').select('date_seance, heure_seance')
+        .in('statut', ['en_attente', 'confirme'])
+        .gte('date_seance', today),
+    ]);
+
+    if (dispos.error) {
+      // Table absente : le fichier supabase/disponibilites.sql n'a pas encore été exécuté
+      dispoForm.hidden = true;
+      dispoList.innerHTML = `<p class="admin-error">L'agenda n'est pas encore activé : exécutez le fichier supabase/disponibilites.sql dans Supabase (SQL Editor). Détail : ${dispos.error.message}</p>`;
+      return;
+    }
+    dispoForm.hidden = false;
+
+    const taken = new Set((booked.data || []).map(r => `${r.date_seance} ${r.heure_seance}`));
+    const byDate = new Map();
+    dispos.data.forEach(d => {
+      if (!byDate.has(d.date_seance)) byDate.set(d.date_seance, []);
+      byDate.get(d.date_seance).push(d);
+    });
+
+    dispoEmpty.hidden = byDate.size > 0;
+    byDate.forEach((slots, iso) => dispoList.appendChild(renderDispoDay(iso, slots, taken)));
+  }
+
+  function renderDispoDay(iso, slots, taken) {
+    const card = document.createElement('article');
+    card.className = 'req-card';
+
+    const main = document.createElement('div');
+    main.className = 'req-main';
+    const title = document.createElement('strong');
+    title.textContent = formatDate(iso);
+    const chips = document.createElement('div');
+    chips.className = 'dispo-chips';
+    main.append(title, chips);
+    card.appendChild(main);
+
+    const free = [];
+    slots.forEach(s => {
+      const chip = document.createElement('span');
+      chip.className = 'dispo-chip';
+      chip.textContent = s.heure_seance;
+      if (taken.has(`${iso} ${s.heure_seance}`)) {
+        chip.classList.add('is-booked');
+        chip.textContent += ' · réservé';
+      } else {
+        free.push(s.id);
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.textContent = '×';
+        del.setAttribute('aria-label', `Retirer le créneau de ${s.heure_seance}`);
+        del.addEventListener('click', () => removeDispos([s.id], del));
+        chip.appendChild(del);
+      }
+      chips.appendChild(chip);
+    });
+
+    if (free.length > 1) {
+      const clearBtn = document.createElement('button');
+      clearBtn.type = 'button';
+      clearBtn.className = 'btn btn-ghost btn-small';
+      clearBtn.textContent = 'Retirer la journée';
+      clearBtn.addEventListener('click', () => removeDispos(free, clearBtn));
+      card.appendChild(clearBtn);
+    }
+
+    return card;
+  }
+
+  async function removeDispos(ids, btn) {
+    btn.disabled = true;
+    const { error } = await supabaseClient.from('disponibilites').delete().in('id', ids);
+    if (error) {
+      alert("Une erreur est survenue, le créneau n'a pas été retiré.");
+      btn.disabled = false;
+      return;
+    }
+    loadDispos();
+  }
+
+  dispoForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    dispoError.hidden = true;
+
+    const start = document.getElementById('d-date').value;
+    const weeks = parseInt(document.getElementById('d-repeat').value, 10) || 1;
+    const hours = Array.from(dispoForm.querySelectorAll('input[name="d-heure"]:checked'), i => i.value);
+    const other = document.getElementById('d-autre').value;
+    if (other) hours.push(other.slice(0, 5));
+
+    if (!start || hours.length === 0) {
+      dispoError.textContent = 'Choisissez une date et au moins une heure.';
+      dispoError.hidden = false;
+      return;
+    }
+
+    const rows = [];
+    for (let w = 0; w < weeks; w++) {
+      const day = new Date(start + 'T00:00:00');
+      day.setDate(day.getDate() + 7 * w);
+      new Set(hours).forEach(h => rows.push({ date_seance: localISO(day), heure_seance: h }));
+    }
+
+    // Un créneau déjà ouvert est simplement ignoré (pas de doublon)
+    const { error } = await supabaseClient.from('disponibilites')
+      .upsert(rows, { onConflict: 'date_seance,heure_seance', ignoreDuplicates: true });
+
+    if (error) {
+      dispoError.textContent = "Impossible d'ouvrir ces créneaux : " + error.message;
+      dispoError.hidden = false;
+      return;
+    }
+
+    dispoForm.reset();
+    loadDispos();
+  });
+
   /* ---------- Séances de groupe ouvertes ---------- */
   const atelierForm = document.getElementById('atelier-form');
   const atelierError = document.getElementById('atelier-error');
@@ -209,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadAteliers() {
     ateliersList.innerHTML = '';
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localISO(new Date());
 
     const { data, error } = await supabaseClient
       .from('ateliers_sessions')

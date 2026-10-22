@@ -126,6 +126,49 @@ create or replace view creneaux_pris as
 grant select on creneaux_pris to anon;
 
 -- =========================================================
+-- Agenda des disponibilités (séances individuelles, ateliers privés)
+-- La cliente ouvre elle-même ses créneaux depuis admin.html ; le site ne
+-- propose que ceux-là, moins ceux déjà réservés (vue creneaux_pris).
+-- Tant que cette table n'existe pas, le site garde l'ancien fonctionnement
+-- (horaires fixes BASE_SLOTS de js/reservation.js, tous les jours sauf le
+-- dimanche).
+-- =========================================================
+create table if not exists disponibilites (
+  id            uuid primary key default gen_random_uuid(),
+  created_at    timestamptz not null default now(),
+  date_seance   date not null,
+  heure_seance  text not null check (heure_seance ~ '^([01][0-9]|2[0-3]):[0-5][0-9]$'),  -- format 'HH:MM'
+  unique (date_seance, heure_seance)
+);
+
+alter table disponibilites enable row level security;
+
+-- Le public ne voit que les créneaux à venir (aucune donnée personnelle ici)
+create policy "public_select_disponibilites"
+  on disponibilites for select
+  to anon
+  using (date_seance >= current_date);
+
+-- Seule la cliente connectée ouvre ou retire des créneaux
+create policy "admin_select_disponibilites"
+  on disponibilites for select
+  to authenticated
+  using (true);
+
+create policy "admin_insert_disponibilites"
+  on disponibilites for insert
+  to authenticated
+  with check (true);
+
+create policy "admin_delete_disponibilites"
+  on disponibilites for delete
+  to authenticated
+  using (true);
+
+grant select on disponibilites to anon;
+grant select, insert, delete on disponibilites to authenticated;
+
+-- =========================================================
 -- Capacité des séances de groupe ouvertes
 -- -----------------------------------------------------------
 -- Protège contre le surbooking au niveau base de données : une place ne

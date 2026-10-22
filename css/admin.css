@@ -57,3 +57,31 @@
 }
 
 .atelier-card .req-status.is-complet { background: #F3DFD5; color: var(--color-terra-deep); }
+
+/* Mes disponibilités : heures à cocher, créneaux ouverts par journée */
+.admin-atelier-form select {
+  display: block; width: 100%; margin-top: .4rem; padding: .7em .9em; background: #fff;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: .95rem;
+}
+.dispo-hours { border: 0; padding: 0; margin: 0 0 1.1rem; display: flex; flex-wrap: wrap; gap: .5rem .6rem; align-items: center; }
+.dispo-hours legend { font-size: .86rem; font-weight: 600; color: var(--color-slate-2); margin-bottom: .6rem; padding: 0; }
+.admin-atelier-form .dispo-hours label {
+  display: inline-flex; align-items: center; gap: .4rem; margin: 0; padding: .45em .8em; cursor: pointer;
+  border: 1.5px solid var(--color-line); border-radius: 999px; background: #fff;
+  font-family: var(--font-mono); font-size: .86rem; font-weight: 500;
+}
+.admin-atelier-form .dispo-hours input[type="checkbox"] { display: inline; width: auto; margin: 0; }
+.admin-atelier-form .dispo-hours .dispo-other { font-family: var(--font-body); }
+.admin-atelier-form .dispo-hours .dispo-other input { display: inline-block; width: auto; margin: 0; padding: .2em .4em; font-family: var(--font-mono); }
+
+.dispo-chips { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .6rem; }
+.dispo-chip {
+  display: inline-flex; align-items: center; gap: .35rem; padding: .3em .35em .3em .8em;
+  border-radius: 999px; background: var(--color-bg-alt); font-family: var(--font-mono); font-size: .84rem;
+}
+.dispo-chip button {
+  width: 24px; height: 24px; border: 0; border-radius: 50%; background: transparent; cursor: pointer;
+  color: var(--color-ink-soft); font-size: 1rem; line-height: 1;
+}
+.dispo-chip button:hover { background: #F3DFD5; color: var(--color-terra-deep); }
+.dispo-chip.is-booked { background: #E3EBDD; color: var(--color-sage-deep); padding-right: .8em; }

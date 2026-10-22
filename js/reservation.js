@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const widget = document.getElementById('booking-widget');
   if (!widget) return;
 
+  // Horaires proposés tant que l'agenda des disponibilités n'est pas activé dans Supabase
   const BASE_SLOTS = ['09:00', '10:00', '11:00', '14:00', '15:30', '17:00'];
 
   const SUPABASE_READY = typeof SUPABASE_URL !== 'undefined'
@@ -195,7 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const MONTH_LABELS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
   const MAX_MONTHS_AHEAD = 3;
 
-  function toISODate(date) { return date.toISOString().slice(0, 10); }
+  // Date locale 'YYYY-MM-DD' : toISOString() passerait en UTC et, en France,
+  // enregistrerait la veille du jour cliqué
+  function toISODate(date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  }
   function formatDate(date) { return date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); }
   function formatDateISO(iso) { return new Date(iso + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); }
 
@@ -218,6 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let takenByDate = new Map();
+  // Créneaux ouverts par la cliente depuis admin.html (table disponibilites), par date.
+  // null tant que la table n'existe pas dans Supabase : horaires fixes BASE_SLOTS, comme avant.
+  let openByDate = null;
 
   async function loadAvailability() {
     updateNavState();
@@ -226,25 +234,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const from = toISODate(new Date(viewYear, viewMonth, 1));
     const to = toISODate(new Date(viewYear, viewMonth + 1, 0));
 
-    const { data, error } = await supabaseClient
-      .from('creneaux_pris')
-      .select('date_seance, heure_seance')
-      .gte('date_seance', from)
-      .lte('date_seance', to);
+    const [taken, open] = await Promise.all([
+      supabaseClient.from('creneaux_pris').select('date_seance, heure_seance').gte('date_seance', from).lte('date_seance', to),
+      supabaseClient.from('disponibilites').select('date_seance, heure_seance').gte('date_seance', from).lte('date_seance', to),
+    ]);
 
-    if (error) {
+    if (taken.error) {
       calendarEl.innerHTML = '<p class="booking-hint">Impossible de charger les disponibilités pour le moment. Contactez directement Marie-Laurence par téléphone ou email.</p>';
-      console.error(error);
+      console.error(taken.error);
       return;
     }
 
     takenByDate = new Map();
-    (data || []).forEach(row => {
+    (taken.data || []).forEach(row => {
       if (!takenByDate.has(row.date_seance)) takenByDate.set(row.date_seance, new Set());
       takenByDate.get(row.date_seance).add(row.heure_seance);
     });
 
+    if (open.error) {
+      openByDate = null;
+      console.warn('Agenda des disponibilités non activé (supabase/disponibilites.sql) : horaires fixes.', open.error.message);
+    } else {
+      openByDate = new Map();
+      open.data.forEach(row => {
+        if (!openByDate.has(row.date_seance)) openByDate.set(row.date_seance, []);
+        openByDate.get(row.date_seance).push(row.heure_seance);
+      });
+    }
+
     renderCalendar();
+  }
+
+  // Heures encore libres pour une date : celles ouvertes par la cliente, moins celles déjà prises
+  function freeSlots(iso) {
+    const taken = takenByDate.get(iso) || new Set();
+    const offered = openByDate ? (openByDate.get(iso) || []) : BASE_SLOTS;
+    return offered.filter(s => !taken.has(s)).sort();
   }
 
   function renderCalendar() {
@@ -262,12 +287,14 @@ document.addEventListener('DOMContentLoaded', () => {
       calendarEl.appendChild(blank);
     }
 
+    let openDays = 0;
     for (let d = 1; d <= daysInMonth; d++) {
       const date = new Date(viewYear, viewMonth, d);
       const iso = toISODate(date);
-      const taken = takenByDate.get(iso) || new Set();
-      const isFull = BASE_SLOTS.every(s => taken.has(s));
-      const disabled = date < minSelectable || date.getDay() === 0 || closed.has(iso) || isFull;
+      // Sans agenda, le dimanche reste fermé ; avec l'agenda, seuls comptent les créneaux ouverts
+      const disabled = date < minSelectable || closed.has(iso)
+        || (!openByDate && date.getDay() === 0) || freeSlots(iso).length === 0;
+      if (!disabled) openDays++;
 
       const btn = document.createElement('button');
       btn.type = 'button';
@@ -277,6 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!disabled) btn.addEventListener('click', () => selectDay(date, iso, btn));
       calendarEl.appendChild(btn);
     }
+
+    slotsEl.innerHTML = openDays ? ''
+      : '<p class="booking-hint">Aucun créneau disponible ce mois-ci : essayez le mois suivant, ou contactez directement Marie-Laurence.</p>';
   }
 
   function changeMonth(delta) {
@@ -303,8 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderSlots(iso) {
     slotsEl.innerHTML = '';
-    const taken = takenByDate.get(iso) || new Set();
-    BASE_SLOTS.filter(s => !taken.has(s)).forEach(time => {
+    freeSlots(iso).forEach(time => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'slot-btn';
