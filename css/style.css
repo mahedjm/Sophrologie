@@ -418,6 +418,21 @@ html[data-zoom] main > section:first-of-type .reveal:nth-child(n+5) { transition
 .theme-sonore { --u-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none' stroke='black' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 29V9l17-4v20'/%3E%3Ccircle cx='11' cy='29' r='4'/%3E%3Ccircle cx='28' cy='25' r='4'/%3E%3C/svg%3E"); }
 .theme-quotidien { --u-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' fill='none' stroke='black' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 30C10 18 18 10 30 10c0 12-8 20-20 20z'/%3E%3Cpath d='M10 30l11-11'/%3E%3C/svg%3E"); }
 
+/* Polices aux couleurs de l'univers : titres et textes dans des nuances foncées de sa teinte
+   (titres ≥ 10:1, textes ≥ 5:1 sur tous les fonds de la page). L'en-tête suit ; le pied de
+   page reste commun. Sophro-sonore garde le bleu marine, neutre avec son dégradé. */
+.theme-menopause   { --u-ink: #3E2319; --u-text: #594740; }
+.theme-sport       { --u-ink: #233E19; --u-text: #475940; }
+.theme-prepa       { --u-ink: #3E2E19; --u-text: #594E40; }
+.theme-entreprises { --u-ink: #192E3E; --u-text: #404E59; }
+.theme-quotidien   { --u-ink: #192E3E; --u-text: #404F59; }
+.theme main, .theme .site-header {
+  --color-slate-2: var(--u-ink, #203647);
+  --color-ink: var(--u-ink, #1E2A33);
+  --color-ink-soft: var(--u-text, #4E5A63);
+}
+.theme main { color: var(--color-ink); }
+
 .theme em { color: var(--u-em, var(--u-deep)); }
 .theme .eyebrow, .theme .p-icon, .theme .step-num, .theme .pillar-link, .theme .faq-item summary::after { color: var(--u-deep); }
 .theme :is(.hero-text, .faq-item p, .offer-detail, .offer-banner) a:not(.btn) { color: var(--u-deep); }
